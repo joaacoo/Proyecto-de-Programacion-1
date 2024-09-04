@@ -1,6 +1,6 @@
 -Litros de diesel
 -Cuanto se gasto $1350 cada litro
--Mercaderia
+-Mercaderia done
 -Patente
--Marca del camion 
+-Marca del camion done
 -Por cuantos peajes paso? $3500
