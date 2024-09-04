@@ -70,26 +70,7 @@ def ingresoDeDatos():
 #Llamamos a la funcion, que va a devolver la lista de los datos ingresados
 camiones = ingresoDeDatos()
 
-#Declaramos la funcion para ordenar de menor a mayor por carga total
-"""def burbujeo(camiones):
-    largo = len(camiones)
-    desordenada = True
-    while desordenada:
-        desordenada = False
-        for i in range(largo-1):
-            if camiones[i][4] > camiones[i+1][4]:  # Cambio de > a <               
-                #Intercambiar elementos en la lista de camiones
-                aux = camiones[i]
-                camiones[i] = camiones[i+1]
-                camiones[i+1] = aux
-                desordenada = True
-    #Devolvemos los camiones ordenados
-    return camiones
-
-
-#Llamamos a la función de burbujeo para ordenar los camiones por la carga transportada
-camiones = burbujeo(camiones)"""
-
+#Usamos sort para ordenar la lista con la carga de toneladas
 camiones.sort(key=lambda x: x[4])
         
 #Imprimimos la información de los camiones ordenados
