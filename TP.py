@@ -31,7 +31,7 @@ def ingresoDeDatos():
             carga = float(input("La carga total debe ser mayor a 0. Ingrese la carga transportada (toneladas) "))
         
         #Solicitamos el ingreso del consumo de nafta
-        nafta = float(input("Ingrese el consumo de nafta en litros: "))
+        nafta = float(input("Ingrese el consumo de nafta (litros) "))
         #Validamos que el consumo ingresado sea correcto
         while nafta <= 0:
             nafta = float(input("El consumo de nafta debe ser mayor a 0. Ingrese el consumo de nafta en litros: "))
