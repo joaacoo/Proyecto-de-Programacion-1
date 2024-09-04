@@ -62,9 +62,11 @@ def ingresoDeDatos():
     # Devolvemos los valores ingresados
     return camiones
 
-# Arrays de datos para camiones y mercancías
-camiones_marca = ["Iveco", "Mercedes", "Renault", "Scania", "Volvo"]
-mercancias = ["Maíz", "Soja", "Coca Cola", "Arroz", "Trigo", "Leche", "Carne", "Aceite", "Frutas", "Verduras", 
+# Función para imprimir los datos con formato alineado
+def imprimirDatos(camiones):
+    # Arrays de datos para camiones y mercancías
+    camiones_marca = ["Iveco", "Mercedes", "Renault", "Scania", "Volvo"]
+    mercancias = ["Maíz", "Soja", "Coca Cola", "Arroz", "Trigo", "Leche", "Carne", "Aceite", "Frutas", "Verduras", 
               "Papel", "Plástico", "Madera", "Piedra", "Cemento", "Acero", "Herramientas", "Ropa", "Electrónica", 
               "Automóviles", "Productos Químicos", "Fertilizantes", "Juguetes", "Medicamentos", "Vinos", "Cervezas", 
               "Agua Embotellada", "Pescado", "Mariscos", "Lácteos", "Pan", "Harina", "Azúcar", "Café", "Té", 
@@ -78,10 +80,6 @@ mercancias = ["Maíz", "Soja", "Coca Cola", "Arroz", "Trigo", "Leche", "Carne", 
               "Bicicletas De Montaña", "Equipos De Camping", "Instrumentos Musicales", "Vinilos", "Discos Compactos", 
               "Decoraciones De Hogar", "Artículos De Cocina", "Cubiertos", "Platos", "Vasos", "Ollas", "Sartenes", 
               "Productos De Ferretería", "Pinturas", "Brochas", "Rodillos", "Cadenas", "Candados", "Extintores"]
-
-
-# Función para imprimir los datos con formato alineado
-def imprimirDatos(camiones):
     # Usamos sort para ordenar la lista con la carga de toneladas
     camiones.sort(key=lambda x: x[4])
     
