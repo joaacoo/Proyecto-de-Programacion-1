@@ -1,115 +1,130 @@
-
 import random 
-#Declaramos de la funcion, para ingresar los datos de los camiones
+
+# Declaramos la función para ingresar los datos de los camiones
 def ingresoDeDatos():
-    
-    #Definimos la variable que va retornar la funcion
+    # Definimos la variable que va a retornar la función
     camiones = []
     
-    #Solicitamos el ingreso de camiones
+    # Solicitamos el ingreso de camiones
     numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))
     
-    #Solicitamos el ingreso de camiones hasta que ingrese (-1)
+    # Solicitamos el ingreso de camiones hasta que ingrese (-1)
     while numeroCamion != -1:
-        #Contamos la cantidad de veces que se ingreso el mismo camion para luego hacer el promedio de tiempo
+        # Contamos la cantidad de veces que se ingresó el mismo camión para luego hacer el promedio de tiempo
         contTiempo = 1
         
-        #solicitamos el ingreso de tiempo        
+        # Solicitamos el ingreso de tiempo        
         tiempo = int(input("Ingrese el tiempo empleado (horas) "))
-        #Validamos que el tiempo ingresado sea correcto
+        # Validamos que el tiempo ingresado sea correcto
         while tiempo <= 0:
             tiempo = int(input("El tiempo debe ser mayor a 0. Ingrese el tiempo empleado (horas) "))
             
-        #Solicitamos el ingreso de la distancia
+        # Solicitamos el ingreso de la distancia
         distancia = float(input("Ingrese la distancia recorrida (km) "))
-        #Validamos que la distancia ingresada sea correcta
+        # Validamos que la distancia ingresada sea correcta
+        
         while distancia <= 0:
             distancia = float(input("La distancia debe ser mayor a 0. Ingrese la distancia recorrida (km) "))
         
-        #Solicitamos el ingreso de la carga
+        # Solicitamos el ingreso de la carga
         carga = float(input("Ingrese la carga transportada (toneladas) "))
-        #Validamos que la carga ingresada sea correcta
+        # Validamos que la carga ingresada sea correcta
         while carga <= 0:
             carga = float(input("La carga total debe ser mayor a 0. Ingrese la carga transportada (toneladas) "))
         
-        #Validamos que la camion no este previamente en la lista
+        # Validamos que el camión no esté previamente en la lista
         posicion = -1
         
-        #Recorremos la lista de camiones que hay hasta el momento para validar si el camion ya se ingreso
+        # Recorremos la lista de camiones que hay hasta el momento para validar si el camión ya se ingresó
         largo = len(camiones)
         for i in range(largo):
             camion = camiones[i]
             if numeroCamion == camion[0]:
-                #Guardamos la posicion de la lista para obtener los datos
+                # Guardamos la posición de la lista para obtener los datos
                 posicion = i
         
-        #Si posicion es mayor a -1, el camion esta en lista
+        # Si la posición es mayor a -1, el camión está en la lista
         if posicion != -1:
-            #Sumamos en cada variable de tiempo, distancia y carga los valores que venian de la lista
+            # Sumamos en cada variable de tiempo, distancia y carga los valores que venían de la lista
             tiempo = int(camiones[posicion][1]) + tiempo
-            contTiempo = int(camiones[posicion][1]) + 1
+            contTiempo = int(camiones[posicion][2]) + 1
             distancia = float(camiones[posicion][3]) + distancia
             carga = float(camiones[posicion][4]) + carga
-            #Eliminamos el camion de la lista porque despues se agrega con los datos actualizados
+            # Eliminamos el camión de la lista porque después se agrega con los datos actualizados
             camiones.pop(posicion)
                             
-        #Agregamos los datos en la lista
+        # Agregamos los datos en la lista
         camiones.append([numeroCamion, tiempo, contTiempo, distancia, carga])
         
-        #Solicitamos el ingreso del proximo camion
+        # Solicitamos el ingreso del próximo camión
         numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))  
     
-    #Devolvemos los valores ingresados
+    # Devolvemos los valores ingresados
     return camiones
 
+# Arrays de datos para camiones y mercancías
 camiones_marca = ["Iveco", "Mercedes", "Renault", "Scania", "Volvo"]
-camion_ind = camiones_marca[random.randint(0,len(camiones_marca)-1)]
-    
-# Array de mercancías aleatorias
-mercancias = ["maíz", "soja", "coca cola", "arroz", "trigo", "leche", "carne", "aceite", "frutas", "verduras", "papel", "plástico", "madera", "piedra", "cemento", "acero", "herramientas", "ropa", "electrónica", "automóviles", "productos químicos", "fertilizantes", "juguetes", "medicamentos", "vinos", "cervezas", "agua embotellada", "pescado", "mariscos", "lácteos", "pan", "harina", "azúcar", "café", "té", "chocolate", "refrescos", "jugos", "sal", "especias", "salsas", "conservas", "helados", "queso", "yogur", "miel", "galletas", "pasteles", "alimentos congelados", "comida para mascotas", "ropa de cama", "colchones", "muebles", "productos de limpieza", "cosméticos", "jabones", "champús", "papel higiénico", "pañales", "toallas", "cámaras", "teléfonos", "computadoras", "tabletas", "electrodomésticos", "bicicletas", "motos", "neumáticos", "aceites lubricantes", "herramientas de jardinería", "plantas", "semillas", "fertilizantes orgánicos", "maquinaria agrícola", "equipos de construcción", "juguetes para niños", "artículos de papelería", "libros", "revistas", "periódicos", "juguetes para mascotas", "productos deportivos", "bicicletas de montaña", "equipos de camping", "instrumentos musicales", "vinilos", "discos compactos", "decoraciones de hogar", "artículos de cocina", "cubiertos", "platos", "vasos", "ollas", "sartenes", "productos de ferretería", "pinturas", "brochas", "rodillos", "cadenas", "candados", "extintores"]
-mercaderia_ind = mercancias[random.randint(0,len(mercancias)-1)]
+mercancias = ["Maíz", "Soja", "Coca Cola", "Arroz", "Trigo", "Leche", "Carne", "Aceite", "Frutas", "Verduras", 
+              "Papel", "Plástico", "Madera", "Piedra", "Cemento", "Acero", "Herramientas", "Ropa", "Electrónica", 
+              "Automóviles", "Productos Químicos", "Fertilizantes", "Juguetes", "Medicamentos", "Vinos", "Cervezas", 
+              "Agua Embotellada", "Pescado", "Mariscos", "Lácteos", "Pan", "Harina", "Azúcar", "Café", "Té", 
+              "Chocolate", "Refrescos", "Jugos", "Sal", "Especias", "Salsas", "Conservas", "Helados", "Queso", 
+              "Yogur", "Miel", "Galletas", "Pasteles", "Alimentos Congelados", "Comida Para Mascotas", "Ropa De Cama", 
+              "Colchones", "Muebles", "Productos De Limpieza", "Cosméticos", "Jabones", "Champús", "Papel Higiénico", 
+              "Pañales", "Toallas", "Cámaras", "Teléfonos", "Computadoras", "Tabletas", "Electrodomésticos", 
+              "Bicicletas", "Motos", "Neumáticos", "Aceites Lubricantes", "Herramientas De Jardinería", "Plantas", 
+              "Semillas", "Fertilizantes Orgánicos", "Maquinaria Agrícola", "Equipos De Construcción", "Juguetes Para Niños", 
+              "Artículos De Papelería", "Libros", "Revistas", "Periódicos", "Juguetes Para Mascotas", "Productos Deportivos", 
+              "Bicicletas De Montaña", "Equipos De Camping", "Instrumentos Musicales", "Vinilos", "Discos Compactos", 
+              "Decoraciones De Hogar", "Artículos De Cocina", "Cubiertos", "Platos", "Vasos", "Ollas", "Sartenes", 
+              "Productos De Ferretería", "Pinturas", "Brochas", "Rodillos", "Cadenas", "Candados", "Extintores"]
 
+
+# Función para imprimir los datos con formato alineado
 def imprimirDatos(camiones):
-    #Usamos sort para ordenar la lista con la carga de toneladas
+    # Usamos sort para ordenar la lista con la carga de toneladas
     camiones.sort(key=lambda x: x[4])
-            
-    #Imprimimos la información de los camiones ordenados
-    print("Camion       Marca           Tiempo promedio     Distancia recorrida        mercaderia     Carga Total     Promedio de Carga       Consumo por KM")
-    for i in range(len(camiones)):
-        #Obtenemos el vector del camion
-        camion = camiones[i]
-        
-        #Calculamos el tiempo promedio en horas
+    
+    # Encabezados con ancho fijo
+    print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
+        "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total"))
+    
+    for camion in camiones:
+        # Calculamos el tiempo promedio en horas
         promedioTiempoHoras = camion[1] / camion[2]
         
-        #Transformamos en dias y horas
+        # Transformamos en días y horas
         dias = int(promedioTiempoHoras // 24)
         horas = int(promedioTiempoHoras % 24)
         
-        #Promedio de carga transportada por viaje
+        # Promedio de carga transportada por viaje
         promedioCarga = camion[4] / camion[2]
-
-        #Consumo total de litros
-        consumoDiesel = (30/100) * camion[3] 
         
-        #Si algún camión recorrió en total más de 20000 km deberá ser retirado de servicio para someterlo a una revisión mecánica.
-        revisionMecanica = ""
-        if camion[3] > 20000:
-            revisionMecanica = "Revisión mecánica"
-            
-        #Mostramos los valo
-        print(f"{camion[0]}       {camion_ind}         {dias}d {horas}h                    {camion[3]} km           {mercaderia_ind}          {camion[4]} Tn          {promedioCarga} Tn/Viaje           {consumoDiesel} Total       {revisionMecanica}")
+        # Consumo total de litros (30 litros por cada 100 km)
+        consumoDiesel = (30 / 100) * camion[3]
+        
+        # Si algún camión recorrió en total más de 20000 km deberá ser retirado para revisión mecánica
+        revisionMecanica = "Revisión" if camion[3] > 20000 else ""
+        
+        # Imprimimos la información de cada camión con formato alineado
+        print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
+            camion[0], 
+            random.choice(camiones_marca),  # Seleccionamos una marca aleatoria
+            f"{dias}d {horas}h", 
+            f"{camion[3]:.2f} km", 
+            random.choice(mercancias),  # Seleccionamos una mercadería aleatoria
+            f"{camion[4]:.2f} Tn", 
+            f"{promedioCarga:.2f} Tn/Viaje", 
+            f"{consumoDiesel:.2f} L/100km " + revisionMecanica))
 
+# Función principal
 def main():
-        #Llamamos a la funcion, que va a devolver la lista de los datos ingresados
-        camiones = ingresoDeDatos() 
-        imprimirDatos(camiones) 
-        
+    # Llamamos a la función que va a devolver la lista de los datos ingresados
+    camiones = ingresoDeDatos() 
+    imprimirDatos(camiones) 
 
 
 
-    
 
-
-if __name__=="__main__":
-        main() 
+if __name__ == "__main__":
+    main()
