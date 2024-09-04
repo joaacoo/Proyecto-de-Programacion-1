@@ -31,7 +31,7 @@ def ingresoDeDatos():
             carga = float(input("La carga total debe ser mayor a 0. Ingrese la carga transportada (toneladas) "))
         
         #Solicitamos el ingreso del consumo de nafta
-        nafta = float(input("Ingrese el consumo de nafta (litros) "))
+        nafta = float(input("Ingrese el consumo de nafta en litros: "))
         #Validamos que el consumo ingresado sea correcto
         while nafta <= 0:
             nafta = float(input("El consumo de nafta debe ser mayor a 0. Ingrese el consumo de nafta en litros: "))
@@ -67,35 +67,44 @@ def ingresoDeDatos():
     #Devolvemos los valores ingresados
     return camiones
 
-#Llamamos a la funcion, que va a devolver la lista de los datos ingresados
-camiones = ingresoDeDatos()
+def imprimirDatos(camiones):
+    #Usamos sort para ordenar la lista con la carga de toneladas
+    camiones.sort(key=lambda x: x[4])
+            
+    #Imprimimos la información de los camiones ordenados
+    print("Camion  Tiempo promedio    Distancia recorrida      Carga Total      Promedio de Carga     Consumo por KM")
+    for i in range(len(camiones)):
+        #Obtenemos el vector del camion
+        camion = camiones[i]
+        
+        #Calculamos el tiempo promedio en horas
+        promedioTiempoHoras = camion[1] / camion[2]
+        
+        #Transformamos en dias y horas
+        dias = int(promedioTiempoHoras // 24)
+        horas = int(promedioTiempoHoras % 24)
+        
+        #Calculamo el consumo de combustible por kilómetro recorridos
+        consumoKilometro = camion [5] / camion [3]
+        
+        #Promedio de carga transportada por viaje
+        promedioCarga = camion[4] / camion[2]
+        
+        #Si algún camión recorrió en total más de 20000 km deberá ser retirado de servicio para someterlo a una revisión mecánica.
+        revisionMecanica = ""
+        if camion[3] > 20000:
+            revisionMecanica = "Revisión mecánica"
+            
+        #Mostramos los valores
+        print(f"{camion[0]}         {dias}d {horas}h                    {camion[3]} km               {camion[4]} Tn          {promedioCarga} Tn/Viaje           {consumoKilometro} KM/L       {revisionMecanica}")
 
-#Usamos sort para ordenar la lista con la carga de toneladas
-camiones.sort(key=lambda x: x[4])
-        
-#Imprimimos la información de los camiones ordenados
-print("Camion  Tiempo promedio    Distancia recorrida      Carga Total      Promedio de Carga     Consumo por KM")
-for i in range(len(camiones)):
-    #Obtenemos el vector del camion
-    camion = camiones[i]
+def main():
+        #Llamamos a la funcion, que va a devolver la lista de los datos ingresados
+        camiones = ingresoDeDatos() 
+        imprimirDatos(camiones) 
+
     
-    #Calculamos el tiempo promedio en horas
-    promedioTiempoHoras = camion[1] / camion[2]
-    
-    #Transformamos en dias y horas
-    dias = int(promedioTiempoHoras // 24)
-    horas = int(promedioTiempoHoras % 24)
-    
-    #Calculamo el consumo de combustible por kilómetro recorridos
-    consumoKilometro = camion [5] / camion [3]
-    
-    #Promedio de carga transportada por viaje
-    promedioCarga = camion[4] / camion[2]
-    
-    #Si algún camión recorrió en total más de 20000 km deberá ser retirado de servicio para someterlo a una revisión mecánica.
-    revisionMecanica = ""
-    if camion[3] > 20000:
-        revisionMecanica = "Revisión mecánica"
-        
-    #Mostramos los valores
-    print(f"{camion[0]}         {dias}d {horas}h                    {camion[3]} km               {camion[4]} Tn          {promedioCarga} Tn/Viaje           {consumoKilometro} KM/L       {revisionMecanica}")
+
+
+if __name__=="__main__":
+        main() 
