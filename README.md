@@ -3,4 +3,4 @@
 - Mercaderia (done)
 - Marca del camion (done)
 - Por cuantos peajes paso? $3500
-- Apartir de si pasa de 25 toneladas tiene 3 ejes
+- ejes en base a las toneladas transportadas (done)
