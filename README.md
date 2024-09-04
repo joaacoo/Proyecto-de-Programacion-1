@@ -1,7 +1,6 @@
--Litros de diesel
--Cuanto se gasto $1350 cada litro
--Mercaderia done
--Patente
--Marca del camion done
--Por cuantos peajes paso? $3500
+- Litros de diesel (done)
+- Cuanto se gasto $1350 cada litro
+- Mercaderia (done)
+- Marca del camion (done)
+- Por cuantos peajes paso? $3500
 - Apartir de si pasa de 25 toneladas tiene 3 ejes
