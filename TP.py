@@ -1,5 +1,6 @@
-#Declaramos de la funcion, para ingresar los datos de los camiones
+
 import random 
+#Declaramos de la funcion, para ingresar los datos de los camiones
 def ingresoDeDatos():
     
     #Definimos la variable que va retornar la funcion
@@ -31,12 +32,6 @@ def ingresoDeDatos():
         while carga <= 0:
             carga = float(input("La carga total debe ser mayor a 0. Ingrese la carga transportada (toneladas) "))
         
-        #Solicitamos el ingreso del consumo de nafta
-        nafta = float(input("Ingrese el consumo de nafta en litros: "))
-        #Validamos que el consumo ingresado sea correcto
-        while nafta <= 0:
-            nafta = float(input("El consumo de nafta debe ser mayor a 0. Ingrese el consumo de nafta en litros: "))
-        
         #Validamos que la camion no este previamente en la lista
         posicion = -1
         
@@ -55,15 +50,14 @@ def ingresoDeDatos():
             contTiempo = int(camiones[posicion][1]) + 1
             distancia = float(camiones[posicion][3]) + distancia
             carga = float(camiones[posicion][4]) + carga
-            nafta = float(camiones[posicion][5]) + nafta
             #Eliminamos el camion de la lista porque despues se agrega con los datos actualizados
             camiones.pop(posicion)
                             
         #Agregamos los datos en la lista
-        camiones.append([numeroCamion, tiempo, contTiempo, distancia, carga, nafta])
+        camiones.append([numeroCamion, tiempo, contTiempo, distancia, carga])
         
         #Solicitamos el ingreso del proximo camion
-        numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))   
+        numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))  
     
     #Devolvemos los valores ingresados
     return camiones
@@ -92,25 +86,25 @@ def imprimirDatos(camiones):
         dias = int(promedioTiempoHoras // 24)
         horas = int(promedioTiempoHoras % 24)
         
-        #Calculamo el consumo de combustible por kilómetro recorridos
-        consumoKilometro = camion [5] / camion [3]
-        
         #Promedio de carga transportada por viaje
         promedioCarga = camion[4] / camion[2]
+
+        #Consumo total de litros
+        consumoDiesel = (30/100) * camion[3] 
         
         #Si algún camión recorrió en total más de 20000 km deberá ser retirado de servicio para someterlo a una revisión mecánica.
         revisionMecanica = ""
         if camion[3] > 20000:
             revisionMecanica = "Revisión mecánica"
             
-        #Mostramos los valores
-        print(f"{camion[0]}       {camion_ind}         {dias}d {horas}h                    {camion[3]} km           {mercaderia_ind}          {camion[4]} Tn          {promedioCarga} Tn/Viaje           {consumoKilometro} KM/L       {revisionMecanica}")
+        #Mostramos los valo
+        print(f"{camion[0]}       {camion_ind}         {dias}d {horas}h                    {camion[3]} km           {mercaderia_ind}          {camion[4]} Tn          {promedioCarga} Tn/Viaje           {consumoDiesel} Total       {revisionMecanica}")
 
 def main():
         #Llamamos a la funcion, que va a devolver la lista de los datos ingresados
         camiones = ingresoDeDatos() 
         imprimirDatos(camiones) 
-        import random
+        
 
 
 
