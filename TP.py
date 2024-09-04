@@ -105,8 +105,7 @@ def main():
         import random
 
 # Array de marcas de camiones
-camiones = ["Iveco", "Mercedes", "Renault", "Scania", "Volvo", "MAN", "DAF", "Mack", "Kenworth", "Peterbilt"]
-
+camiones = ["Iveco", "Mercedes", "Renault", "Scania", "Volvo"]
 # Array de mercancías aleatorias
 mercancias = ["maíz", "soja", "coca cola", "arroz", "trigo", "leche", "carne", "aceite", "frutas", "verduras", "papel", "plástico", "madera", "piedra", "cemento", "acero", "herramientas", "ropa", "electrónica", "automóviles", "productos químicos", "fertilizantes", "juguetes", "medicamentos", "vinos", "cervezas", "agua embotellada", "pescado", "mariscos", "lácteos", "pan", "harina", "azúcar", "café", "té", "chocolate", "refrescos", "jugos", "sal", "especias", "salsas", "conservas", "helados", "queso", "yogur", "miel", "galletas", "pasteles", "alimentos congelados", "comida para mascotas", "ropa de cama", "colchones", "muebles", "productos de limpieza", "cosméticos", "jabones", "champús", "papel higiénico", "pañales", "toallas", "cámaras", "teléfonos", "computadoras", "tabletas", "electrodomésticos", "bicicletas", "motos", "neumáticos", "aceites lubricantes", "herramientas de jardinería", "plantas", "semillas", "fertilizantes orgánicos", "maquinaria agrícola", "equipos de construcción", "juguetes para niños", "artículos de papelería", "libros", "revistas", "periódicos", "juguetes para mascotas", "productos deportivos", "bicicletas de montaña", "equipos de camping", "instrumentos musicales", "vinilos", "discos compactos", "decoraciones de hogar", "artículos de cocina", "cubiertos", "platos", "vasos", "ollas", "sartenes", "productos de ferretería", "pinturas", "brochas", "rodillos", "cadenas", "candados", "extintores"]
 
