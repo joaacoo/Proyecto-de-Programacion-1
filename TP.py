@@ -29,8 +29,9 @@ def ingresoDeDatos():
         # Solicitamos el ingreso de la carga
         carga = float(input("Ingrese la carga transportada (toneladas) "))
         # Validamos que la carga ingresada sea correcta
-        while carga <= 0:
-            carga = float(input("La carga total debe ser mayor a 0. Ingrese la carga transportada (toneladas) "))
+        while carga <= 0 or carga >=32:
+            carga = float(input("La carga total debe ser mayor a 0 y menor o igual a 32. Ingrese la carga transportada (toneladas) "))
+
         
         # Validamos que el camión no esté previamente en la lista
         posicion = -1
@@ -84,8 +85,8 @@ def imprimirDatos(camiones):
     camiones.sort(key=lambda x: x[4])
     
     # Encabezados con ancho fijo
-    print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
-        "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total"))
+    print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15} {:<30}".format(
+        "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total","Ejes"))
     
     for camion in camiones:
         # Calculamos el tiempo promedio en horas
@@ -101,11 +102,18 @@ def imprimirDatos(camiones):
         # Consumo total de litros (30 litros por cada 100 km)
         consumoDiesel = (30 / 100) * camion[3]
         
+        
         # Si algún camión recorrió en total más de 20000 km deberá ser retirado para revisión mecánica
         revisionMecanica = "Revisión" if camion[3] > 20000 else ""
         
+        #Ejes del camion 
+        ejes= 2
+        if camion[4] >18: 
+            ejes = 3
+        elif camion[4] >=26:
+            ejes = 4
         # Imprimimos la información de cada camión con formato alineado
-        print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
+        print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}{:<30}".format(
             camion[0], 
             random.choice(camiones_marca),  # Seleccionamos una marca aleatoria
             f"{dias}d {horas}h", 
@@ -113,7 +121,10 @@ def imprimirDatos(camiones):
             random.choice(mercancias),  # Seleccionamos una mercadería aleatoria
             f"{camion[4]:.2f} Tn", 
             f"{promedioCarga:.2f} Tn/Viaje", 
-            f"{consumoDiesel:.2f} L/100km " + revisionMecanica))
+            f"{consumoDiesel:.2f} L/100km ",
+            f"{ejes} Ejes" + revisionMecanica))
+        
+        
 
 # Función principal
 def main():
