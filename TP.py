@@ -2,12 +2,13 @@ import random
 
 # Declaramos la función para ingresar los datos de los camiones
 def ingresoDeDatos():
-    # Definimos la variable que va a retornar la función
+    # Definimos la variable que va a retornar la función añadir slicidn gmodulos propios y funviones str
     camiones = []
     
     # Solicitamos el ingreso de camiones
-    numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))
-    
+    numeroCamion = int(input("Ingrese el número de  no ppuede ser negativi (-1 para terminar) "))
+    while numeroCamion <-1:
+        numeroCamion = int(input("Ingrese el número de camión ( no puede ser negativo ) (-1 para terminar) "))
     # Solicitamos el ingreso de camiones hasta que ingrese (-1)
     while numeroCamion != -1:
         # Contamos la cantidad de veces que se ingresó el mismo camión para luego hacer el promedio de tiempo
@@ -85,8 +86,8 @@ def imprimirDatos(camiones):
     camiones.sort(key=lambda x: x[4])
     
     # Encabezados con ancho fijo
-    print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15} {:<30}".format(
-        "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total","Ejes"))
+    print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
+        "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total"))
     
     for camion in camiones:
         # Calculamos el tiempo promedio en horas
@@ -106,14 +107,9 @@ def imprimirDatos(camiones):
         # Si algún camión recorrió en total más de 20000 km deberá ser retirado para revisión mecánica
         revisionMecanica = "Revisión" if camion[3] > 20000 else ""
         
-        #Ejes del camion 
-        ejes= 2
-        if camion[4] >18: 
-            ejes = 3
-        elif camion[4] >=26:
-            ejes = 4
+    
         # Imprimimos la información de cada camión con formato alineado
-        print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}{:<30}".format(
+        print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
             camion[0], 
             random.choice(camiones_marca),  # Seleccionamos una marca aleatoria
             f"{dias}d {horas}h", 
@@ -121,9 +117,7 @@ def imprimirDatos(camiones):
             random.choice(mercancias),  # Seleccionamos una mercadería aleatoria
             f"{camion[4]:.2f} Tn", 
             f"{promedioCarga:.2f} Tn/Viaje", 
-            f"{consumoDiesel:.2f} L/100km ",
-            f"{ejes} Ejes" + revisionMecanica))
-        
+            f"{consumoDiesel:.2f} L/100km" + revisionMecanica))        
         
 
 # Función principal
