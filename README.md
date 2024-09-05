@@ -31,3 +31,5 @@ python main.py
 Ingreso de datos: El programa te pedirá ingresar datos como el número de camión, tiempo empleado (en horas), distancia recorrida (en km) y carga transportada (en toneladas).
 
 Reporte: Al finalizar, el programa imprimirá una tabla con los datos de todos los camiones, indicando tiempo promedio, distancia recorrida, carga y consumo de combustible. También resaltará si algún camión necesita revisión.
+Personalización
+Los nombres de las marcas de camiones y tipos de mercancías son seleccionados aleatoriamente de listas predefinidas. Puedes personalizar estas listas editando las variables camiones_marca y mercancias en el archivo main.py.
