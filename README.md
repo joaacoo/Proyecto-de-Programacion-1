@@ -1,6 +1,0 @@
-- Litros de diesel (done)
-- Cuanto se gasto $1350 cada litro
-- Mercaderia (done)
-- Marca del camion (done)
-- Por cuantos peajes paso? $3500
-- ejes en base a las toneladas transportadas (done)
