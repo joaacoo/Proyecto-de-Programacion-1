@@ -4,32 +4,30 @@ def ingresoDeDatos():
     camiones = []
     
     # Solicitamos el ingreso de camiones
-    numeroCamion = int(input("Ingrese el número no puede ser negativo (-1 para terminar) "))
-    while numeroCamion < -1:
-        numeroCamion = int(input("Ingrese un número de camión valido (-1 para terminar) "))
-    # Solicitamos el ingreso de camiones hasta que ingrese (-1)
+    numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))
+    
     while numeroCamion != -1:
+        # Validamos que el número del camión sea positivo
+        while numeroCamion < 1:
+            numeroCamion = int(input("Ingrese un número de camión válido (-1 para terminar): "))
+            
         # Contamos la cantidad de veces que se ingresó el mismo camión para luego hacer el promedio de tiempo
         contTiempo = 1
         
-        # Solicitamos el ingreso de tiempo        
-        tiempo = int(input("Ingrese el tiempo empleado (horas) "))
-        # Validamos que el tiempo ingresado sea correcto
+        # Solicitar y validar el tiempo
+        tiempo = int(input("Ingrese el tiempo empleado (horas): "))
         while tiempo <= 0:
-            tiempo = int(input("El tiempo debe ser mayor a 0. Ingrese el tiempo empleado (horas) "))
-            
-        # Solicitamos el ingreso de la distancia
-        distancia = float(input("Ingrese la distancia recorrida (km) "))
-        # Validamos que la distancia ingresada sea correcta
+            tiempo = int(input("El tiempo debe ser mayor a 0. Ingrese el tiempo empleado (horas): "))
         
+        # Solicitar y validar la distancia
+        distancia = float(input("Ingrese la distancia recorrida (km): "))
         while distancia <= 0:
-            distancia = float(input("La distancia debe ser mayor a 0. Ingrese la distancia recorrida (km) "))
+            distancia = float(input("La distancia debe ser mayor a 0. Ingrese la distancia recorrida (km): "))
         
-        # Solicitamos el ingreso de la carga
-        carga = float(input("Ingrese la carga transportada (toneladas) "))
-        # Validamos que la carga ingresada sea correcta
-        while carga <= 0 or carga >=32:
-            carga = float(input("La carga total debe ser mayor a 0 y menor o igual a 32. Ingrese la carga transportada (toneladas) "))
+        # Solicitar y validar la carga
+        carga = float(input("Ingrese la carga transportada (toneladas): "))
+        while carga <= 0 or carga >= 32:
+            carga = float(input("La carga debe ser mayor a 0 y menor o igual a 32. Ingrese la carga transportada (toneladas): "))
 
         # Usamos lista de comprensión para encontrar la posición del camión
         posiciones = [i for i in range(len(camiones)) if camiones[i][0] == numeroCamion]
