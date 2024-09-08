@@ -5,7 +5,7 @@ def ingresoDeDatos():
     
     # Solicitamos el ingreso de camiones
     numeroCamion = int(input("Ingrese el número no puede ser negativo (-1 para terminar) "))
-    while numeroCamion <-1:
+    while numeroCamion < -1:
         numeroCamion = int(input("Ingrese un número de camión valido (-1 para terminar) "))
     # Solicitamos el ingreso de camiones hasta que ingrese (-1)
     while numeroCamion != -1:
@@ -32,7 +32,7 @@ def ingresoDeDatos():
             carga = float(input("La carga total debe ser mayor a 0 y menor o igual a 32. Ingrese la carga transportada (toneladas) "))
 
         # Usamos lista de comprensión para encontrar la posición del camión
-        posiciones = [i for i, camion in enumerate(camiones) if numeroCamion == camion[0]]
+        posiciones = [i for i in range(len(camiones)) if camiones[i][0] == numeroCamion]
 
         # Tomamos la primera posición si existe
         posicion = posiciones[0] if posiciones else -1
@@ -41,13 +41,14 @@ def ingresoDeDatos():
         if posicion != -1:
             # Sumamos en cada variable de tiempo, distancia y carga los valores que venían de la lista
             tiempo = int(camiones[posicion][1]) + tiempo
+            contTiempo = int(camiones[posicion][2]) + 1
             distancia = float(camiones[posicion][3]) + distancia
             carga = float(camiones[posicion][4]) + carga
             # Eliminamos el camión repetido de la lista porque después se agrega con los datos actualizados
             camiones = camiones[:posicion] + camiones[posicion+1:]
                             
         # Agregamos los datos en la lista
-        camiones.append([numeroCamion, tiempo, contTiempo, distancia, carga])
+        camiones.append([numeroCamion, tiempo, 1, distancia, carga])
         
         # Solicitamos el ingreso del próximo camión
         numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))  

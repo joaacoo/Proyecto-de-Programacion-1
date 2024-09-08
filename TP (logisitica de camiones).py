@@ -28,6 +28,8 @@ def imprimirDatos(camiones):
     print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
         "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total"))
     
+    maxViajes = 0
+
     for camion in camiones:
         # Calculamos el tiempo promedio en horas
         promedioTiempoHoras = camion[1] / camion[2]
@@ -56,22 +58,7 @@ def imprimirDatos(camiones):
             random.choice(mercancias),  # Seleccionamos una mercadería aleatoria
             f"{camion[4]:.2f} Tn", 
             f"{promedioCarga:.2f} Tn/Viaje", 
-            f"{consumoDiesel:.2f} L/100km" + revisionMecanica))
-        
-        maxViajes = 0
-
-        if camion[2] > maxViajes:
-            maxViajes = camion[2]
-            camionMasViajes = camion
-            
-    # Dejamos un espacio entre la tabla y el informe
-    print ("")
-    # Imprimimos el resultado
-    if maxViajes > 1:
-        print(f"El camión con más viajes es el número {camionMasViajes[0]} con {camionMasViajes[2]} viajes.")
-    else:
-        print("Todos los camiones realizaron un solo viaje.")
-
+            f"{consumoDiesel:.2f} L/100km" + revisionMecanica))      
         
 
 # Función principal
