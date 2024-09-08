@@ -41,14 +41,13 @@ def ingresoDeDatos():
         if posicion != -1:
             # Sumamos en cada variable de tiempo, distancia y carga los valores que venían de la lista
             tiempo = int(camiones[posicion][1]) + tiempo
-            contTiempo = int(camiones[posicion][2]) + 1
             distancia = float(camiones[posicion][3]) + distancia
             carga = float(camiones[posicion][4]) + carga
             # Eliminamos el camión repetido de la lista porque después se agrega con los datos actualizados
             camiones = camiones[:posicion] + camiones[posicion+1:]
                             
         # Agregamos los datos en la lista
-        camiones.append([numeroCamion, tiempo, 1, distancia, carga])
+        camiones.append([numeroCamion, tiempo, contTiempo, distancia, carga])
         
         # Solicitamos el ingreso del próximo camión
         numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))  
