@@ -13,7 +13,6 @@ Este proyecto es una aplicación en Python para gestionar información sobre cam
   - Carga total transportada.
   - Consumo total de diésel (30 litros por cada 100 km recorridos).
   - Camiones que superen los 20,000 km totales se marcarán para revisión mecánica.
-  - Identificación del camión con mayor número de viajes.
 
 ## Requisitos
 
