@@ -12,8 +12,7 @@ def ingresoDeDatos():
             numeroCamion = int(input("Ingrese un número de camión válido (-1 para terminar): "))
             
         # Contamos la cantidad de veces que se ingresó el mismo camión para luego hacer el promedio de tiempo
-        contTiempo = 1
-        
+        contTiempo = 1        
         # Solicitar y validar el tiempo
         tiempo = int(input("Ingrese el tiempo empleado (horas): "))
         while tiempo <= 0:
@@ -40,6 +39,7 @@ def ingresoDeDatos():
             # Sumamos en cada variable de tiempo, distancia y carga los valores que venían de la lista
             tiempo = int(camiones[posicion][1]) + tiempo
             distancia = float(camiones[posicion][3]) + distancia
+            contTiempo = int(camiones[posicion][2]) + 1
             carga = float(camiones[posicion][4]) + carga
             # Eliminamos el camión repetido de la lista porque después se agrega con los datos actualizados
             camiones = camiones[:posicion] + camiones[posicion+1:]

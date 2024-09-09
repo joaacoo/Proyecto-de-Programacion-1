@@ -35,6 +35,8 @@ def imprimirDatos(camiones):
         # Transformamos en días y horas
         dias = int(promedioTiempoHoras // 24)
         horas = int(promedioTiempoHoras % 24)
+        minutos = int((promedioTiempoHoras * 60) % 60)
+        segundos = int((promedioTiempoHoras * 3600) % 60)
         
         # Promedio de carga transportada por viaje
         promedioCarga = camion[4] / camion[2]
@@ -51,13 +53,12 @@ def imprimirDatos(camiones):
         print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
             camion[0], 
             random.choice(camiones_marca),  # Seleccionamos una marca aleatoria
-            f"{dias}d {horas}h", 
+            f"{dias}d {horas}h {minutos}m {segundos}s", 
             f"{camion[3]:.2f} km", 
             random.choice(mercancias),  # Seleccionamos una mercadería aleatoria
             f"{camion[4]:.2f} Tn", 
             f"{promedioCarga:.2f} Tn/Viaje", 
             f"{consumoDiesel:.2f} L/100km" + revisionMecanica))      
-        
 
 # Función principal
 def main():
