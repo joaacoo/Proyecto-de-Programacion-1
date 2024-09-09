@@ -27,8 +27,6 @@ def imprimirDatos(camiones):
     # Encabezados con ancho fijo
     print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
         "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total"))
-    
-    maxViajes = 0
 
     for camion in camiones:
         # Calculamos el tiempo promedio en horas
