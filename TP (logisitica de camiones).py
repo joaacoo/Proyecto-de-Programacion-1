@@ -3,67 +3,59 @@ import random
 from ingresoDeCamiones import ingresoDeDatos
 
 
-# Función para imprimir los datos con formato alineado
-def imprimirDatos(camiones):
-    # Arrays de datos para camiones y mercancías
-    camiones_marca = ["Iveco", "Mercedes", "Renault", "Scania", "Volvo"]
-    mercancias = ["Maíz", "Soja", "Coca Cola", "Arroz", "Trigo", "Leche", "Carne", "Aceite", "Frutas", "Verduras", 
-              "Papel", "Plástico", "Madera", "Piedra", "Cemento", "Acero", "Herramientas", "Ropa", "Electrónica", 
-              "Automóviles", "Productos Químicos", "Fertilizantes", "Juguetes", "Medicamentos", "Vinos", "Cervezas", 
-              "Agua Embotellada", "Pescado", "Mariscos", "Lácteos", "Pan", "Harina", "Azúcar", "Café", "Té", 
-              "Chocolate", "Refrescos", "Jugos", "Sal", "Especias", "Salsas", "Conservas", "Helados", "Queso", 
-              "Yogur", "Miel", "Galletas", "Pasteles", "Alimentos Congelados", "Comida Para Mascotas", "Ropa De Cama", 
-              "Colchones", "Muebles", "Productos De Limpieza", "Cosméticos", "Jabones", "Champús", "Papel Higiénico", 
-              "Pañales", "Toallas", "Cámaras", "Teléfonos", "Computadoras", "Tabletas", "Electrodomésticos", 
-              "Bicicletas", "Motos", "Neumáticos", "Aceites Lubricantes", "Herramientas De Jardinería", "Plantas", 
-              "Semillas", "Fertilizantes Orgánicos", "Maquinaria Agrícola", "Equipos De Construcción", "Juguetes Para Niños", 
-              "Artículos De Papelería", "Libros", "Revistas", "Periódicos", "Juguetes Para Mascotas", "Productos Deportivos", 
-              "Bicicletas De Montaña", "Equipos De Camping", "Instrumentos Musicales", "Vinilos", "Discos Compactos", 
-              "Decoraciones De Hogar", "Artículos De Cocina", "Cubiertos", "Platos", "Vasos", "Ollas", "Sartenes", 
-              "Productos De Ferretería", "Pinturas", "Brochas", "Rodillos", "Cadenas", "Candados", "Extintores"]
-    # Usamos sort para ordenar la lista con la carga de toneladas
-    camiones.sort(key=lambda x: x[4])
+def cargarMatriz(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga):
+    # Crear la matriz con encabezados
+    matriz = [["Camion", "Tiempo", "Distancia", "Cantidad de viajes", "Carga"]]
     
-    # Encabezados con ancho fijo
-    print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
-        "Camion", "Marca", "Tiempo promedio", "Distancia recorrida", "Mercadería", "Carga Total", "Prom. Carga", "Consumo total"))
+    # Iterar sobre las listas para poblar la matriz
+    matriz += [[camiones, tiempo, distancia, contTiempo, carga] for camiones, tiempo, distancia, contTiempo, carga in zip(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga)]
+    
+    return matriz
 
-    for camion in camiones:
+def imprimirMatriz(matriz):
+    filas = len(matriz)
+    columnas = len(matriz[0])
+    for f in range(filas):
+        for c in range(columnas):
+            print("%20s" % str(matriz[f][c]), end=" ")  # Formato para alinear y mostrar bien los datos
+        print()
+
+# Función para imprimir los datos con formato alineado
+def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga):
+
+    for i in range(len(lista_camiones)):
         # Calculamos el tiempo promedio en horas
-        promedioTiempoHoras = camion[1] / camion[2]
+        promedioTiempoHoras = lista_tiempo[i] / lista_contTiempo[i]
         
         # Transformamos en días y horas
-        dias = int(promedioTiempoHoras // 24)
-        horas = int(promedioTiempoHoras % 24)
-        minutos = int((promedioTiempoHoras * 60) % 60)
+        dias = str(int(promedioTiempoHoras // 24))        
+        horas = str(int(promedioTiempoHoras % 24)).zfill(2)
+        minutos = str(int((promedioTiempoHoras * 60) % 60)).zfill(2)
         
         # Promedio de carga transportada por viaje
-        promedioCarga = camion[4] / camion[2]
+        promedioCarga = lista_carga[i] / lista_contTiempo[i]
         
         # Consumo total de litros (30 litros por cada 100 km)
-        consumoDiesel = (30 / 100) * camion[3]
-        
+        consumoDiesel = (30 / 100) * lista_distancia[i]
         
         # Si algún camión recorrió en total más de 20000 km deberá ser retirado para revisión mecánica
-        revisionMecanica = "Revisión" if camion[3] > 20000 else ""
-        
-    
-        # Imprimimos la información de cada camión con formato alineado
-        print("{:<10} {:<10} {:<20} {:<20} {:<15} {:<15} {:<20} {:<15}".format(
-            camion[0], 
-            random.choice(camiones_marca),  # Seleccionamos una marca aleatoria
-            f"{dias}d {horas}h {minutos}m", 
-            f"{camion[3]:.2f} km", 
-            random.choice(mercancias),  # Seleccionamos una mercadería aleatoria
-            f"{camion[4]:.2f} Tn", 
-            f"{promedioCarga:.2f} Tn/Viaje", 
-            f"{consumoDiesel:.2f} L/100km" + revisionMecanica))      
+        revisionMecanica = (" revisión mecanica.").upper() if lista_distancia[i] > 20000 else ""
+                
+        print(f"El camion {lista_camiones[i]} manejo un tiempo promedio de: {dias}d {horas}h {minutos}m, consumio de diesel: {consumoDiesel:.2f} L/100km y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
+        print()
 
 # Función principal
 def main():
     # Llamamos a la función que va a devolver la lista de los datos ingresados
-    camiones = ingresoDeDatos() 
-    imprimirDatos(camiones) 
+    lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga = ingresoDeDatos()
+    matriz = cargarMatriz(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga)
+    
+    print("Resultados:")
+    imprimirMatriz(matriz)
+    
+    print()
+    print("Analisis de datos:")
+    analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga) 
 
 
 if __name__ == "__main__":
