@@ -12,6 +12,10 @@ def ingresoDeDatos():
     numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))   
 
     while numeroCamion != -1:
+        id = int(input("ingrese el numero del  ID del conductor: (debe ser de 1000 a 10000)"))
+        while id <1000 or id >10000:
+                    id = int(input("ingrese el numero del  ID del conductor: (debe ser de 1000 a 10000)"))
+
         # Validamos que el número del camión sea positivo
         while numeroCamion < 1:
             numeroCamion = int(input("Ingrese un número de camión válido (-1 para terminar): "))            
