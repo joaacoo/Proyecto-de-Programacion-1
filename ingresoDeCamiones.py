@@ -57,5 +57,12 @@ def ingresoDeDatos():
         # Devolvemos los valores ingresados
         return lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga
     
-    except ValueError; TypeError:
+    
+    except ValueError:
+   
         print("El valor ingresado no es valido")
+    except  ValueError:
+        print("el valor debe ser un numero obligatorio ")
+    else:
+         numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))   
+
