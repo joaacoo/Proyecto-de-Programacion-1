@@ -47,9 +47,9 @@ def ingresoDeDatos():
                         lista_carga.append([[identificacion, carga]])  # Inicializar con una lista que contenga [identificacion, carga]
 
         except ValueError:
-            print("El valor ingresado no es válido. Asegúrese de ingresar un número entero.")
+            print("El valor ingresado no es válido. Ingresa un ingresar un número entero.")
         except TypeError:
-            print("Ha ocurrido un error de tipo. Verifique los datos ingresados.")
+            print("El valor ingresado no es válido. Ingresa un ingresar un número entero.")
         
         # Solicitar el ingreso del próximo camión
         numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))
