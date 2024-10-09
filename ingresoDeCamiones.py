@@ -9,50 +9,56 @@ def ingresoDeDatos():
     lista_carga = []
 
     # Solicitar el ingreso del primer camión
-    numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))
+    numeroCamion = input("Ingrese el número del camión (-1 para terminar): ")
     
-    while numeroCamion != -1:
+    while numeroCamion != "-1":
         try:
+            numeroCamion = int(numeroCamion)
+
             # Validar que el número del camión sea positivo
             if numeroCamion < 1:
                 print("Ingrese un número de camión válido (-1 para terminar).")
             else:
-                identificacion = int(input("Ingrese un número de identificación: "))
+                identificacion = input("Ingrese un número de identificación: ")
                 
-                if identificacion < 0:
-                    print("Ingrese un número de identificación válido.")
-                else:
-                    # Solicitar y validar el tiempo, distancia y carga
-                    tiempo = random.randint(1, 35)
-                    distancia = random.randint(1, 99999)
-                    carga = random.randint(1, 32)
+                try:
+                    identificacion = int(identificacion)
 
-                    camion_existente = False
-                    
-                    # Verificar si el camión ya está en la lista
-                    for i in range(len(lista_camiones)):
-                        if lista_camiones[i] == numeroCamion:
-                            camion_existente = True
-                            lista_tiempo[i] += tiempo
-                            lista_distancia[i] += distancia
-                            lista_contTiempo[i] += 1
-                            lista_carga[i].append([identificacion, carga])  # Agregar la carga y identificación
-                            break
-                    
-                    if not camion_existente:  # Si el camión no existe
-                        lista_camiones.append(numeroCamion)
-                        lista_tiempo.append(tiempo)
-                        lista_distancia.append(distancia)
-                        lista_contTiempo.append(1)
-                        lista_carga.append([[identificacion, carga]])  # Inicializar con una lista que contenga [identificacion, carga]
+                    if identificacion < 0:
+                        print("Ingrese un número de identificación válido.")
+                    else:
+                        # Solicitar y validar el tiempo, distancia y carga
+                        tiempo = random.randint(1, 35)
+                        distancia = random.randint(1, 99999)
+                        carga = random.randint(1, 32)
+
+                        camion_existente = False
+
+                        # Verificar si el camión ya está en la lista
+                        for i in range(len(lista_camiones)):
+                            if lista_camiones[i] == numeroCamion:
+                                camion_existente = True
+                                lista_tiempo[i] += tiempo
+                                lista_distancia[i] += distancia
+                                lista_contTiempo[i] += 1
+                                lista_carga[i].append([identificacion, carga])  # Agregar la carga y identificación
+                                break
+
+                        if not camion_existente:  # Si el camión no existe
+                            lista_camiones.append(numeroCamion)
+                            lista_tiempo.append(tiempo)
+                            lista_distancia.append(distancia)
+                            lista_contTiempo.append(1)
+                            lista_carga.append([[identificacion, carga]])  # Inicializar con una lista que contenga [identificacion, carga]
+
+                except ValueError:
+                    print("El valor ingresado para identificación no es válido. Ingresa un número entero.")
 
         except ValueError:
-            print("El valor ingresado no es válido. Ingresa un ingresar un número entero.")
-        except TypeError:
-            print("El valor ingresado no es válido. Ingresa un ingresar un número entero.")
-        
+            print("El valor ingresado no es válido. Ingresa un número entero.")
+
         # Solicitar el ingreso del próximo camión
-        numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))
+        numeroCamion = input("Ingrese el número del camión (-1 para terminar): ")
     
     # Devolvemos los valores ingresados
     return lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga
