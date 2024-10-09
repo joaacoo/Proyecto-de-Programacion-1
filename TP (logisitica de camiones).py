@@ -1,9 +1,9 @@
 from ingresoDeCamiones import ingresoDeDatos
-
+import csv
 
 def cargar_matriz(camiones, identificaciones, cargas):
     # Crear la matriz con encabezados
-    matriz = [["Número Camiones"] + identificaciones]
+    matriz = [["Numero Camiones"] + identificaciones]
 
     # Crear filas para cada camión
     for camion in camiones:
@@ -43,16 +43,16 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         
         consumoDiesel = (30 / 100) * lista_distancia[i]
         
-        revisionMecanica = (" revisión mecanica.").upper() if lista_distancia[i] > 20000 else ""
+        revisionMecanica = (" revision mecanica.").upper() if lista_distancia[i] > 20000 else ""
                 
-        print(f"El camión {lista_camiones[i]} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, distancia recorrida: {lista_distancia[i]} KM, consumió de diesel: {consumoDiesel:.2f} L/100km y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
+        print(f"El camion {lista_camiones[i]} manejo un tiempo promedio de: {dias}d {horas}h {minutos}m, distancia recorrida: {lista_distancia[i]} KM, consumio de diesel: {consumoDiesel:.2f} L/100km y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
         print()
     
     camiones_mas_distancia = [lista_camiones[i] for i in range(len(lista_distancia)) if lista_distancia[i] > 0]
     distancias = [lista_distancia[i] for i in range(len(lista_distancia)) if lista_distancia[i] > 0]
          
     if len(camiones_mas_distancia) == 1:  # Si solo hay un camión en la lista
-        print("Camiones que recorrieron más distancia (sin el que menos recorrió):")
+        print("Camiones que recorrieron mas distancia (sin el que menos recorrio):")
         print(camiones_mas_distancia)  # Imprimir el único camión
     elif distancias:
         min_distancia = distancias[0]
@@ -65,10 +65,18 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         
         camiones_filtrados = camiones_mas_distancia[:indice_min_distancia] + camiones_mas_distancia[indice_min_distancia+1:]
         
-        print("Camiones que recorrieron más distancia (sin el que menos recorrió):")
+        print("Camiones que recorrieron mas distancia (sin el que menos recorrio):")
         print(camiones_filtrados)
     else:
         print("No hay camiones con distancia registrada.")
+
+def guardar_en_csv(matriz, nombre_archivo):
+    with open(nombre_archivo, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        for fila in matriz:
+            writer.writerow(fila)
+    print(f"Datos guardados en {nombre_archivo}")
+
 
 def main():
     lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga = ingresoDeDatos()
@@ -84,13 +92,15 @@ def main():
     print("Matriz de Cargas:")
     print("")
     
-    print(f"{'Identificación':>40}", end=" ")  # Alineamos la palabra "Identificación"
+    print(f"{'Identificacion':>40}", end=" ")  # Alineamos la palabra "Identificación"
     print()
     imprimirMatriz(matriz_cargas)
     
     print()
     print("Análisis de datos:")
-    analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga) 
+    analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga)
+    
+    guardar_en_csv(matriz_cargas, "matriz_cargas.csv")
 
 if __name__ == "__main__":
     main()

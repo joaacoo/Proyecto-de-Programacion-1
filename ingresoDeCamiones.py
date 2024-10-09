@@ -1,4 +1,6 @@
 import random
+import csv
+
 
 # Declaramos la función para ingresar los datos de los camiones
 def ingresoDeDatos():
