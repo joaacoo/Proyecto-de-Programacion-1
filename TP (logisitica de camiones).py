@@ -1,5 +1,6 @@
 from ingresoDeCamiones import ingresoDeDatos
 
+
 def cargar_matriz(camiones, identificaciones, cargas):
     # Crear la matriz con encabezados
     matriz = [["Número Camiones"] + identificaciones]
