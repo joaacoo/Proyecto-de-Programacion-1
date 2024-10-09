@@ -1,25 +1,26 @@
 import random
+
 # Declaramos la función para ingresar los datos de los camiones
 def ingresoDeDatos():
-    # Definimos la variable que va a retornar la función añadir slicidn gmodulos propios y funviones str
     lista_camiones = []
     lista_tiempo = []
     lista_contTiempo = []
     lista_distancia = []
     lista_carga = []
-    
+
     # Solicitamos el ingreso de camiones
     numeroCamion = int(input("Ingrese el número del camión (-1 para terminar): "))   
 
     while numeroCamion != -1:
-        id = int(input("ingrese el numero del  ID del conductor: (debe ser de 1000 a 10000)"))
-        while id <1000 or id >10000:
-                    id = int(input("ingrese el numero del  ID del conductor: (debe ser de 1000 a 10000)"))
-
         # Validamos que el número del camión sea positivo
         while numeroCamion < 1:
-            numeroCamion = int(input("Ingrese un número de camión válido (-1 para terminar): "))            
-                    
+            numeroCamion = int(input("Ingrese un número de camión válido (-1 para terminar): "))
+            
+        identificacion = int(input("Ingrese un número de identificación: "))
+        
+        while identificacion < 0:
+            identificacion = int(input("Ingrese un número de identificación válido: "))
+   
         # Solicitar y validar el tiempo
         tiempo = random.randint(1, 35)
         
@@ -29,31 +30,28 @@ def ingresoDeDatos():
         # Solicitar y validar la carga
         carga = random.randint(1, 32)
         
-        # Usamos lista de comprensión para encontrar la posición del camión
-        posiciones = [i for i in range(len(lista_camiones)) if lista_camiones[i] == numeroCamion]
-
-        # Tomamos la primera posición si existe
-        posicion = posiciones[0] if posiciones else -1
+        camion_existente = False
         
-        # Si la posición es mayor a -1, el camión está en la lista
-        if posicion != -1:
-            # Sumamos en cada variable de tiempo, distancia y carga los valores que venían de la lista
-            lista_tiempo[posicion] = int(lista_tiempo[posicion]) + tiempo
-            lista_distancia[posicion] = float(lista_distancia[posicion]) + distancia
-            lista_contTiempo[posicion] = int(lista_contTiempo[posicion]) + 1
-            lista_carga[posicion] = float(lista_carga[posicion]) + carga
-        else:
-            # Agregamos los datos en las listas homogeneas
+        # Verificamos si el camión ya está en la lista
+        for i in range(len(lista_camiones)):
+            if lista_camiones[i] == numeroCamion:
+                camion_existente = True
+                # Sumamos en cada variable de tiempo, distancia y carga los valores que venían de la lista
+                lista_tiempo[i] += tiempo
+                lista_distancia[i] += distancia
+                lista_contTiempo[i] += 1
+                lista_carga[i].append([identificacion, carga])  # Agregar la carga y identificación
+                i = len(lista_camiones)  # Para salir del ciclo for
+        
+        if not camion_existente:  # Si el camión no existe
             lista_camiones.append(numeroCamion)
             lista_tiempo.append(tiempo)
             lista_distancia.append(distancia)
             lista_contTiempo.append(1)
-            lista_carga.append(carga)
-                            
+            lista_carga.append([[identificacion, carga]])  # Inicializar con una lista que contenga [identificacion, carga]
         
-        # Solicitamos el ingreso del próximo camión
-        numeroCamion = int(input("Ingrese el número de camión (-1 para terminar) "))
+        # Solicitar el ingreso del próximo camión
+        numeroCamion = int(input("Ingrese el número de camión (-1 para terminar): "))
     
     # Devolvemos los valores ingresados
     return lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga
-
