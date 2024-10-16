@@ -1,9 +1,8 @@
 from ingresoDeCamiones import ingresoDeDatos
 import csv
 
-
 def cargar_matriz(camiones, identificaciones, cargas):
-    # Crear la matriz con encabezados
+    # Crear la matriz con encabezados (puedes incluir las unidades aquí si lo deseas)
     matriz = [["Numero Camiones"] + identificaciones]
 
     # Crear filas para cada camión
@@ -17,36 +16,44 @@ def cargar_matriz(camiones, identificaciones, cargas):
                     for carga_info in cargas[i]:
                         if carga_info[0] == iden:  # Coincidencia de identificación
                             carga += carga_info[1]  # Sumar carga
-            fila.append(f"{carga} (Tn)" if carga > 0 else "0")  # Agregar carga a la fila
+            fila.append(carga)  # Agregar carga numérica a la fila sin unidades
         matriz.append(fila)
 
     return matriz
 
 def imprimirMatriz(matriz):
-    for fila in matriz:
-        for elemento in fila:
-            print(f"{str(elemento):>20}", end=" ")  # Alinear a la derecha
+    # Asumiendo que deseas imprimir las unidades al mostrar la matriz
+    # Añadimos las unidades solo para imprimir, no en los datos de la matriz
+    encabezados = matriz[0]
+    print(f"{'':>20}", end=" ")  # Espacio para el primer encabezado
+    for encabezado in encabezados[1:]:
+        print(f"{str(encabezado):>20}", end=" ")
+    print()
+    for fila in matriz[1:]:
+        print(f"{str(fila[0]):>20}", end=" ")  # Imprimir número de camión
+        for elemento in fila[1:]:
+            print(f"{str(elemento) + ' (Tn)':>20}", end=" ")  # Añadir unidades al imprimir
         print()
 
 def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga):
     for i in range(len(lista_camiones)):
-        promedioTiempoHoras = lista_tiempo[i] / lista_contTiempo[i]
+        promedioTiempoHoras = lista_tiempo[i] / lista_contTiempo[i] if lista_contTiempo[i] > 0 else 0
         
         dias = str(int(promedioTiempoHoras // 24))        
         horas = str(int(promedioTiempoHoras % 24)).zfill(2)
         minutos = str(int((promedioTiempoHoras * 60) % 60)).zfill(2)
         
-        carga_total = sum(c[1] for c in lista_carga[i])
+        carga_total = 0
+        for c in lista_carga[i]:
+            carga_total += c[1]
 
         promedioCarga = carga_total / lista_contTiempo[i] if lista_contTiempo[i] > 0 else 0
         
         consumoDiesel = (30 / 100) * lista_distancia[i]
         
-        revisionMecanica = (" revisión mecánica.").upper() if lista_distancia[i] > 20000 else ""
+        revisionMecanica = (" REVISION MECANICA.").upper() if lista_distancia[i] > 20000 else ""
                 
-        print(f"El camión {lista_camiones[i]} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, "
-              f"distancia recorrida: {lista_distancia[i]} KM, consumió diesel: {consumoDiesel:.2f} L/100km "
-              f"y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
+        print(f"El camión {lista_camiones[i]} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, distancia recorrida: {lista_distancia[i]} KM, consumió diesel: {consumoDiesel:.2f} L/100km y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
         print()
     
     camiones_mas_distancia = [lista_camiones[i] for i in range(len(lista_distancia)) if lista_distancia[i] > 0]
@@ -59,7 +66,7 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         min_distancia = min(distancias)
         indice_min_distancia = distancias.index(min_distancia)
         
-        camiones_filtrados = camiones_mas_distancia[:indice_min_distancia] + camiones_mas_distancia[indice_min_distancia + 1:]
+        camiones_filtrados = camiones_mas_distancia[:indice_min_distancia] + camiones_mas_distancia[indice_min_distancia+1:]
         
         print("Camiones que recorrieron más distancia (sin el que menos recorrió):")
         print(camiones_filtrados)
@@ -86,9 +93,6 @@ def main():
     
     print("Matriz de Cargas:")
     print("")
-    
-    print(f"{'Identificación':>40}", end=" ")  # Alinear la palabra "Identificación"
-    print()
     imprimirMatriz(matriz_cargas)
     
     print()
