@@ -2,39 +2,26 @@ from ingresoDeCamiones import ingresoDeDatos
 import csv
 
 def cargar_matriz(camiones, identificaciones, cargas):
-    # Crear la matriz con encabezados (puedes incluir las unidades aquí si lo deseas)
-    matriz = [["Numero Camiones"] + identificaciones]
-
-    # Crear filas para cada camión
-    for camion in camiones:
-        fila = [camion]  # Comenzar la fila con el número del camión
-        for iden in identificaciones:
-            carga = 0  # Inicializar carga en 0
-            # Verificar si hay carga para el camión y la identificación
-            for i in range(len(cargas)):
-                if camiones[i] == camion:  # Coincidencia de camión
-                    for carga_info in cargas[i]:
-                        if carga_info[0] == iden:  # Coincidencia de identificación
-                            carga += carga_info[1]  # Sumar carga
-            fila.append(carga)  # Agregar carga numérica a la fila sin unidades
-        matriz.append(fila)
-
+    # Crear la matriz con encabezados
+    matriz = [["Numero Camion", "Identificacion", "Carga (Tn)"]]
+    
+    # Crear filas para cada combinación de camión e identificación
+    for i in range(len(camiones)):
+        camion = camiones[i]
+        for carga_info in cargas[i]:
+            identificacion = carga_info[0]
+            carga = carga_info[1]
+            fila = [camion, identificacion, f"{carga} (Tn)"]
+            matriz.append(fila)
+    
     return matriz
 
 def imprimirMatriz(matriz):
-    # Asumiendo que deseas imprimir las unidades al mostrar la matriz
-    # Añadimos las unidades solo para imprimir, no en los datos de la matriz
-    encabezados = matriz[0]
-    print(f"{'':>20}", end=" ")  # Espacio para el primer encabezado
-    for encabezado in encabezados[1:]:
-        print(f"{str(encabezado):>20}", end=" ")
-    print()
-    for fila in matriz[1:]:
-        print(f"{str(fila[0]):>20}", end=" ")  # Imprimir número de camión
-        for elemento in fila[1:]:
-            print(f"{str(elemento) + ' (Tn)':>20}", end=" ")  # Añadir unidades al imprimir
+    for fila in matriz:
+        for elemento in fila:
+            print(f"{str(elemento):>20}", end=" ")  # Alinear a la derecha
         print()
-
+    
 def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga):
     for i in range(len(lista_camiones)):
         promedioTiempoHoras = lista_tiempo[i] / lista_contTiempo[i] if lista_contTiempo[i] > 0 else 0
@@ -53,7 +40,7 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         
         revisionMecanica = (" REVISION MECANICA.").upper() if lista_distancia[i] > 20000 else ""
                 
-        print(f"El camión {lista_camiones[i]} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, distancia recorrida: {lista_distancia[i]} KM, consumió diesel: {consumoDiesel:.2f} L/100km y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
+        print(f"El camion {lista_camiones[i]} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, distancia recorrida: {lista_distancia[i]} KM, consumió diesel: {consumoDiesel:.2f} L/100km y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")        
         print()
     
     camiones_mas_distancia = [lista_camiones[i] for i in range(len(lista_distancia)) if lista_distancia[i] > 0]
@@ -63,8 +50,13 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         print("Camiones que recorrieron más distancia (sin el que menos recorrió):")
         print(camiones_mas_distancia)  # Imprimir el único camión
     elif distancias:
-        min_distancia = min(distancias)
-        indice_min_distancia = distancias.index(min_distancia)
+        min_distancia = distancias[0]
+        indice_min_distancia = 0
+        
+        for i in range(1, len(distancias)):
+            if distancias[i] < min_distancia:
+                min_distancia = distancias[i]
+                indice_min_distancia = i
         
         camiones_filtrados = camiones_mas_distancia[:indice_min_distancia] + camiones_mas_distancia[indice_min_distancia+1:]
         
@@ -74,7 +66,7 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         print("No hay camiones con distancia registrada.")
 
 def guardar_en_csv(matriz, nombre_archivo):
-    with open(nombre_archivo, mode='w', newline='') as file:
+    with open(nombre_archivo, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         for fila in matriz:
             writer.writerow(fila)
@@ -83,13 +75,9 @@ def guardar_en_csv(matriz, nombre_archivo):
 def main():
     lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga = ingresoDeDatos()
     
-    lista_identificacion = []
-    for c in lista_carga:
-        for carga in c:
-            if carga[0] not in lista_identificacion:  # Comprobar que la identificación no está en la lista
-                lista_identificacion.append(carga[0])
+    # Obtenemos todas las identificaciones únicas (opcional, ya no es necesario para esta estructura)
     
-    matriz_cargas = cargar_matriz(lista_camiones, lista_identificacion, lista_carga)
+    matriz_cargas = cargar_matriz(lista_camiones, None, lista_carga)
     
     print("Matriz de Cargas:")
     print("")
