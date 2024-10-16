@@ -1,14 +1,10 @@
 import random
-import csv
-
 
 # Declaramos la función para ingresar los datos de los camiones
 def ingresoDeDatos():
     lista_camiones = []
-    lista_tiempo = []
-    lista_contTiempo = []
-    lista_distancia = []
-    lista_carga = []
+    camiones_data = {}  # Diccionario para almacenar los datos de cada camión
+    cargas_data = {}    # Diccionario para almacenar las cargas de cada camión
 
     # Solicitar el ingreso del primer camión
     numeroCamion = input("Ingrese el número del camión (-1 para terminar): ")
@@ -34,33 +30,36 @@ def ingresoDeDatos():
                         distancia = random.randint(1, 99999)
                         carga = random.randint(1, 32)
 
-                        camion_existente = False
+                        # Agregar o actualizar datos del camión
+                        if numeroCamion not in camiones_data:
+                            camiones_data[numeroCamion] = {
+                                'tiempo': tiempo,
+                                'distancia': distancia,
+                                'contTiempo': 1
+                            }
+                            cargas_data[numeroCamion] = [(identificacion, carga)]  # Inicializar carga
+                        else:
+                            camiones_data[numeroCamion]['tiempo'] += tiempo
+                            camiones_data[numeroCamion]['distancia'] += distancia
+                            camiones_data[numeroCamion]['contTiempo'] += 1
+                            cargas_data[numeroCamion].append((identificacion, carga))  # Agregar carga
 
-                        # Verificar si el camión ya está en la lista
-                        for i in range(len(lista_camiones)):
-                            if lista_camiones[i] == numeroCamion:
-                                camion_existente = True
-                                lista_tiempo[i] += tiempo
-                                lista_distancia[i] += distancia
-                                lista_contTiempo[i] += 1
-                                lista_carga[i].append([identificacion, carga])  # Agregar la carga y identificación
-                                break
-
-                        if not camion_existente:  # Si el camión no existe
+                        if numeroCamion not in lista_camiones:
                             lista_camiones.append(numeroCamion)
-                            lista_tiempo.append(tiempo)
-                            lista_distancia.append(distancia)
-                            lista_contTiempo.append(1)
-                            lista_carga.append([[identificacion, carga]])  # Inicializar con una lista que contenga [identificacion, carga]
 
                 except ValueError:
-                    print("El valor ingresado para identificación no es válido. Ingresa un número entero.")
+                    print("El valor ingresado para identificación no es válido.")
 
         except ValueError:
-            print("El valor ingresado no es válido. Ingresa un número entero.")
+            print("El valor ingresado no es válido.")
 
         # Solicitar el ingreso del próximo camión
         numeroCamion = input("Ingrese el número del camión (-1 para terminar): ")
     
     # Devolvemos los valores ingresados
+    lista_tiempo = [camiones_data[camion]['tiempo'] for camion in lista_camiones]
+    lista_distancia = [camiones_data[camion]['distancia'] for camion in lista_camiones]
+    lista_contTiempo = [camiones_data[camion]['contTiempo'] for camion in lista_camiones]
+    lista_carga = [cargas_data[camion] for camion in lista_camiones]
+
     return lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga
