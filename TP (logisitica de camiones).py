@@ -67,11 +67,15 @@ def analisisDatos(lista_camiones, lista_tiempo, lista_distancia, lista_contTiemp
         print("No hay camiones con distancia registrada.")
 
 def guardar_en_csv(matriz, nombre_archivo):
+    # Transponer la matriz para convertir filas en columnas
+    matriz_transpuesta = zip(*matriz)
+
     with open(nombre_archivo, mode='w', newline='') as file:
         writer = csv.writer(file)
-        for fila in matriz:
-            writer.writerow(fila)
-    print(f"Datos guardados en {nombre_archivo}")
+        for columna in matriz_transpuesta:
+            writer.writerow(columna)
+    
+    print(f"Datos guardados en columnas en {nombre_archivo}")
 
 def main():
     lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga = ingresoDeDatos()
