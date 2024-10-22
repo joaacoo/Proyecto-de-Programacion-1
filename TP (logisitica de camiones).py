@@ -1,6 +1,7 @@
 from ingresoDeCamiones import ingresoDeDatos
 
 
+
 def cargar_matriz_recursivo(camiones, identificaciones, cargas):
     if not camiones:  # Caso base: lista vacía
         return []
@@ -13,6 +14,7 @@ def cargar_matriz_recursivo(camiones, identificaciones, cargas):
         fila.append(f"{carga} (Tn)" if carga > 0 else "0")
         
     return [fila] + cargar_matriz_recursivo(camiones[1:], identificaciones, cargas[1:])  # Llamada recursiva con el resto
+
 
 
 def imprimirMatriz(matriz, identificaciones):
@@ -29,6 +31,7 @@ def imprimirMatriz(matriz, identificaciones):
         for elemento in fila:
             print(f"{str(elemento):>20}", end=" ")  # Alinear a la derecha
         print()
+
 
 
 def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
@@ -56,6 +59,7 @@ def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
     analisisDatosRecursivo(camiones[1:], tiempos[1:], distancias[1:], contTiempos[1:], cargas[1:])
 
 
+
 def guardarDatos(camiones_data):
     acumulador_kilometros = {}
 
@@ -73,11 +77,14 @@ def guardarDatos(camiones_data):
     try:
         with open("revisionMecanica.txt", mode='w') as arch:
             for numeroCamion, datos in acumulador_kilometros.items():
-                # Escribir en el formato especificado
-                arch.write(f"Número de camión: {numeroCamion}; Identificación: {datos['identificacion']}; Distancia recorrida: {datos['distancia']}\n")
+                # Escribir en un formato más legible
+                arch.write(f"Número de camión: {numeroCamion}\n")
+                arch.write(f"Identificación: {datos['identificacion']}\n")
+                arch.write(f"Distancia recorrida: {datos['distancia']} KM\n\n")  # Espacio entre entradas
         print("Se han almacenado los datos en el archivo 'revisionMecanica.txt'.")
     except IOError:
         print("No se pudo crear el archivo.")
+
 
 
 def main():
@@ -101,6 +108,7 @@ def main():
     
     print("")
     guardarDatos(camiones_data)
+
 
 
 if __name__ == "__main__":
