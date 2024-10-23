@@ -1,5 +1,6 @@
 import random
 
+
 def crearCSV():
 
     try:
@@ -19,6 +20,7 @@ def crearCSV():
         print("No se pudo crear el archivo")
 
     return 'informes.csv', 'camion_iden.csv'
+
 
 def ingresoDeDatos():
     lista_camiones = []

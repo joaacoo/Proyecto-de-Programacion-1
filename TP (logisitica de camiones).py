@@ -6,8 +6,10 @@ def cargar_matriz_recursivo(camiones, identificaciones, cargas):
     if not camiones:  # Caso base: lista vacía
         return []
 
+
     camion = camiones[0]  # Tomar el primer camión
     fila = [camion]  # Solo el número de camión
+
 
     for iden in identificaciones:
         carga = 0  # Inicializar la carga en 0
@@ -16,7 +18,7 @@ def cargar_matriz_recursivo(camiones, identificaciones, cargas):
                 carga += carga_info[1]  # Suma el segundo valor a 'carga'
 
         fila.append(f"{carga} (Tn)" if carga > 0 else "0")
-        
+
     return [fila] + cargar_matriz_recursivo(camiones[1:], identificaciones, cargas[1:])  # Llamada recursiva con el resto
 
 
@@ -25,10 +27,12 @@ def imprimirMatriz(matriz, identificaciones):
     print(f"{'Identificación':>40}")  # Centrar la palabra "Identificación"
     print(f"{'Número de Camión':>20}", end=" ")  # Alinear el encabezado "Número de Camión"
     
+    
     # Imprimir los encabezados de identificación
     for iden in identificaciones:
         print(f"{iden:>20}", end=" ")  # Alinear las identificaciones
     print()  # Nueva línea
+
 
     # Imprimir la matriz
     for fila in matriz:
@@ -38,98 +42,62 @@ def imprimirMatriz(matriz, identificaciones):
 
 
 
-def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
-    if not camiones:  # Caso base: lista vacía
-        return
-
-    camion = camiones[0]
-    promedioTiempoHoras = tiempos[0] / contTiempos[0]
-    
-    
-    dias = str(int(promedioTiempoHoras // 24))
-    horas = str(int(promedioTiempoHoras % 24)).zfill(2)
-    minutos = str(int((promedioTiempoHoras * 60) % 60)).zfill(2)
-    
-    carga_total = sum(c[1] for c in cargas[0])
-    promedioCarga = carga_total / contTiempos[0] if contTiempos[0] > 0 else 0
-    
-    if contTiempos[0] > 0:         # Verificamos que el contador de tiempos sea mayor a 0
-        promedioCarga = carga_total / contTiempos[0]  # Calculamos el promedio de carga si es mayor a 0
-    else:
-        promedioCarga = 0           # Si el contador es 0 o menor, el promedio de carga es 0
-
-    try:   
-        with open("promedio_cargas.csv", "w") as cargasarch: 
-            cargasarch.write(f"Numero de camion;Promedio de Cargas\n")
-            cargasarch.write(f"{camion}, {promedioCarga:.2f}\n")
-            print("Se han almacenado los datos en el archivo promedio_cargas.csv")
-    except IOError:
-        print("no se puede escribir el archivo promedio_cargas.csv")
-        
-    
-    consumoDiesel = (30 / 100) * distancias[0]
-    
-    try:
-        with open("consumo_diesel.csv", "w") as dieselArch:
-            dieselArch.write(f"Numero de camion;Consumo de Diesel(L)\n")
-            dieselArch.write(f"{camion}, {consumoDiesel} L/100km ")
-            print("Se han almacenado los datos en el archivo consumo_diesel.csv")
-    except IOError:
-                print("no se puede escribir el archivo consumo_diesel.csv")
-
-    revisionMecanica = (" revisión mecánica.").upper() if distancias[0] > 20000 else ""
-
-    print()
-    print(f"El camión {camion} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, "
-          f"distancia recorrida: {distancias[0]} KM, consumió diesel: {consumoDiesel:.2f} L/100km "
-          f"y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")
-          
-
-    # Llama recursivamente con el resto de las listas
-    analisisDatosRecursivo(camiones[1:], tiempos[1:], distancias[1:], contTiempos[1:], cargas[1:])
-
-
-
-
 def guardarDatos(camiones_data):
-    acumulador_kilometros = {}
-
-    # Acumular kilómetros por número de camión
-    for numeroCamion, datos in camiones_data.items():
-        if datos['distancia'] > 20000:
-            if numeroCamion not in acumulador_kilometros:
-                acumulador_kilometros[numeroCamion] = {
-                    'distancia': datos['distancia']
-                }
-            else:
-                acumulador_kilometros[numeroCamion]['distancia'] += datos['distancia']
-
-    # Guardar datos en archivo CSV
+    # Archivo de la distancia recorrida
     try:
-        with open("revisionMecanica.csv", mode='w') as arch:
-            arch.write("Numero de Camion;Distancia Recorrida (KM)\n")  # Encabezados
-            for numeroCamion, datos in acumulador_kilometros.items():
-                arch.write(f"{numeroCamion};{datos['distancia']}\n")
-        print("Se han almacenado los datos en el archivo revisionMecanica.csv.")
-
+        with open("distancia.csv", mode='w') as distanciaArch:
+            distanciaArch.write("Numero de Camion;Distancia Recorrida\n")
+            for numeroCamion, datos in camiones_data.items():
+                # Verificar que la distancia esté definida
+                if 'distancia' in datos:
+                    distanciaArch.write(f"{numeroCamion};{datos['distancia']} KM\n")
+            print("Se almacenaron los datos de recorrido en el archivo distancia.csv.")
+        
     except IOError:
-        print(f"No se pudo crear el archivo revisionMecanica.csv.")
-
-    # Archivo tiempo promedio
+        print("No se pudo crear el archivo distancia.csv.")
+        
+    # Archivo del tiempo promedio
     try:
         with open('tiempoPromedio.csv', mode='w') as arch:
-            arch.write('Numero de Camion;Días;Horas;Minutos\n')  # Encabezados
+            arch.write('Numero de Camion;Días;Horas;Minutos\n')
             for camion, data in camiones_data.items():
-                total_tiempo = data['tiempo']
+                total_tiempo = data['tiempo'] if 'tiempo' in data else 0  # Verificar si existe 'tiempo'
                 dias = total_tiempo // 24
                 horas = (total_tiempo % 24)
                 minutos = (total_tiempo * 60) % 60
                 
                 arch.write(f"{camion};{dias}d;{horas}hr;{minutos}min\n")
-        print("Se han almacenado los tiempos promedios en tiempoPromedio.csv.")
-
+            print("Se almacenaron los tiempos promedios en tiempoPromedio.csv.")
+    
     except IOError:
-        print(f"No se pudo crear el archivo tiempoPromedio.csv.")
+        print("No se pudo crear el archivo tiempoPromedio.csv.")
+
+    # Archivo de consumo de diésel
+    try:
+        with open("consumoDiesel.csv", mode='w') as dieselArch:
+            dieselArch.write("Numero de Camion;Consumo de Diesel(L)\n")
+            for numeroCamion, datos in camiones_data.items():
+                if 'distancia' in datos:
+                    consumoDiesel = (30 / 100) * datos['distancia']  # Calcular el consumo
+                    dieselArch.write(f"{numeroCamion};{consumoDiesel:.2f} L/100km\n")
+            print("Se almacenaron los datos de consumo de diésel en el archivo consumoDiesel.csv.")
+        
+    except IOError:
+        print("No se pudo crear el archivo consumoDiesel.csv.")
+        
+    # Archivo de revisión mecánica
+    try:
+        with open("revisionMecanica.csv", mode='w') as arch:
+            arch.write("Numero de Camion;Distancia Recorrida (KM)\n")
+            for numeroCamion, datos in camiones_data.items():
+                if 'distancia' in datos and datos['distancia'] > 20000:  # Filtrar según la distancia
+                    arch.write(f"{numeroCamion};{datos['distancia']}\n")
+            print("Se almacenaron los datos en el archivo revisionMecanica.csv.")
+        
+    except IOError:
+        print("No se pudo crear el archivo revisionMecanica.csv.")
+
+        
 
 def main():
     lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga, camiones_data = ingresoDeDatos()
@@ -147,11 +115,9 @@ def main():
     imprimirMatriz(matriz_cargas, lista_identificacion)
     
     print("")
-    print("Análisis de datos:")
-    analisisDatosRecursivo(lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga)
-    
-    print("")
     guardarDatos(camiones_data)
+    
+    
 
 if __name__ == "__main__":
     main()
