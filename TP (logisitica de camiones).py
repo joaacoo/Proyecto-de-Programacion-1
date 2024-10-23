@@ -84,13 +84,13 @@ def guardarDatos(camiones_data):
                 acumulador_kilometros[numeroCamion]['distancia'] += datos['distancia']
 
     try:
-        with open("revisionMecanica.txt", mode='w') as arch:
+        with open("revisionMecanica.csv", mode='w') as arch:
             for numeroCamion, datos in acumulador_kilometros.items():
                 # Escribir en un formato más legible
                 arch.write(f"Número de camión: {numeroCamion}\n")
                 arch.write(f"Identificación: {datos['identificacion']}\n")
                 arch.write(f"Distancia recorrida: {datos['distancia']} KM\n\n")  # Espacio entre entradas
-        print("Se han almacenado los datos en el archivo 'revisionMecanica.txt'.")
+        print("Se han almacenado los datos en el archivo 'revisionMecanica.csv'.")
     except IOError:
         print("No se pudo crear el archivo.")
 
