@@ -10,10 +10,14 @@ def cargar_matriz_recursivo(camiones, identificaciones, cargas):
     fila = [camion]  # Solo el número de camión
 
     for iden in identificaciones:
-        carga = sum(carga_info[1] for carga_info in cargas[0] if carga_info[0] == iden)
+        carga = 0  # Inicializar la carga en 0
+        for carga_info in cargas[0]:  # Recorre cada elemento en la primera lista de 'cargas'
+            if carga_info[0] == iden:  # Solo incluye los elementos donde el primer valor es igual a 'iden'
+                carga += carga_info[1]  # Suma el segundo valor a 'carga'
+
         fila.append(f"{carga} (Tn)" if carga > 0 else "0")
         
-    return [fila] + cargar_matriz_recursivo(camiones[1:], identificaciones, cargas[1:])  # Llamada recursiva con el resto
+    return [fila] + cargar_matriz_recursivo(camiones[1:], identificaciones, cargas[1:])  # Llamada recursiva con el resto7
 
 
 
@@ -68,7 +72,6 @@ def guardarDatos(camiones_data):
         if datos['distancia'] > 20000:
             if numeroCamion not in acumulador_kilometros:
                 acumulador_kilometros[numeroCamion] = {
-                    'identificacion': datos['identificacion'],
                     'distancia': datos['distancia']
                 }
             else:
@@ -79,7 +82,6 @@ def guardarDatos(camiones_data):
             for numeroCamion, datos in acumulador_kilometros.items():
                 # Escribir en un formato más legible
                 arch.write(f"Número de camión: {numeroCamion}\n")
-                arch.write(f"Identificación: {datos['identificacion']}\n")
                 arch.write(f"Distancia recorrida: {datos['distancia']} KM\n\n")  # Espacio entre entradas
         print("Se han almacenado los datos en el archivo 'revisionMecanica.txt'.")
     except IOError:
