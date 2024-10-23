@@ -57,7 +57,7 @@ def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
         promedioCarga = carga_total / contTiempos[0]  # Calculamos el promedio de carga si es mayor a 0
     else:
         promedioCarga = 0           # Si el contador es 0 o menor, el promedio de carga es 0
-     
+
     try:   
         with open("promedio_cargas.csv", "w") as cargasarch: 
             cargasarch.write(f"Numero de camion;Promedio de Cargas\n")
@@ -69,14 +69,21 @@ def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
     
     consumoDiesel = (30 / 100) * distancias[0]
     
-    
-    
+    try:
+        with open("consumo_diesel.csv", "w") as dieselArch:
+            dieselArch.write(f"Numero de camion;Consumo de Diesel(L)\n")
+            dieselArch.write(f"{camion}, {consumoDiesel} L/100km ")
+            print("Se han almacenado los datos en el archivo consumo_diesel.csv")
+    except IOError:
+                print("no se puede escribir el archivo consumo_diesel.csv")
+
     revisionMecanica = (" revisión mecánica.").upper() if distancias[0] > 20000 else ""
 
     print()
     print(f"El camión {camion} manejó un tiempo promedio de: {dias}d {horas}h {minutos}m, "
           f"distancia recorrida: {distancias[0]} KM, consumió diesel: {consumoDiesel:.2f} L/100km "
           f"y promedio de carga: {promedioCarga:.2f} Tn/Viaje.{revisionMecanica}")
+          
 
     # Llama recursivamente con el resto de las listas
     analisisDatosRecursivo(camiones[1:], tiempos[1:], distancias[1:], contTiempos[1:], cargas[1:])
