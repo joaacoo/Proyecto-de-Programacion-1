@@ -43,7 +43,15 @@ def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
         return
 
     camion = camiones[0]
-    promedioTiempoHoras = tiempos[0] / contTiempos[0]
+    carga_total = sum(c[1] for c in cargas[0])
+    if contTiempos[0] > 0:         # Verificamos que el contador de tiempos sea mayor a 0
+        promedioCarga = carga_total / contTiempos[0]  # Calculamos el promedio de carga si es mayor a 0
+    else:
+        promedioCarga = 0           # Si el contador es 0 o menor, el promedio de carga es 0
+        
+    with open("promedio_cargas.csv", "w") as cargasarch: 
+        cargasarch.write(f"Numero de camion;Promedio de Cargas\n")
+        cargasarch.write(f"{camion}, {promedioCarga:.2f}\n")
     
     dias = str(int(promedioTiempoHoras // 24))
     horas = str(int(promedioTiempoHoras % 24)).zfill(2)
