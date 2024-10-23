@@ -10,7 +10,11 @@ def cargar_matriz_recursivo(camiones, identificaciones, cargas):
     fila = [camion]  # Solo el número de camión
 
     for iden in identificaciones:
-        carga = sum(carga_info[1] for carga_info in cargas[0] if carga_info[0] == iden)
+        carga = 0  # Inicializar la carga en 0
+        for carga_info in cargas[0]:  # Recorre cada elemento en la primera lista de 'cargas'
+            if carga_info[0] == iden:  # Solo incluye los elementos donde el primer valor es igual a 'iden'
+                carga += carga_info[1]  # Suma el segundo valor a 'carga'
+
         fila.append(f"{carga} (Tn)" if carga > 0 else "0")
         
     return [fila] + cargar_matriz_recursivo(camiones[1:], identificaciones, cargas[1:])  # Llamada recursiva con el resto
@@ -60,6 +64,7 @@ def analisisDatosRecursivo(camiones, tiempos, distancias, contTiempos, cargas):
 
 
 
+
 def guardarDatos(camiones_data):
     acumulador_kilometros = {}
 
@@ -68,27 +73,37 @@ def guardarDatos(camiones_data):
         if datos['distancia'] > 20000:
             if numeroCamion not in acumulador_kilometros:
                 acumulador_kilometros[numeroCamion] = {
-                    'identificacion': datos['identificacion'],
                     'distancia': datos['distancia']
                 }
             else:
                 acumulador_kilometros[numeroCamion]['distancia'] += datos['distancia']
 
+    # Guardar datos en archivo CSV
     try:
-        with open("revisionMecanica.txt", mode='w') as arch:
+        with open("revisionMecanica.csv", mode='w') as arch:
+            arch.write("Numero de Camion;Distancia Recorrida (KM)\n")  # Encabezados
             for numeroCamion, datos in acumulador_kilometros.items():
-                # Escribir en un formato más legible
-                arch.write(f"Número de camión: {numeroCamion}\n")
-                arch.write(f"Identificación: {datos['identificacion']}\n")
-                arch.write(f"Distancia recorrida: {datos['distancia']} KM\n\n")  # Espacio entre entradas
-        print("Se han almacenado los datos en el archivo 'revisionMecanica.txt'.")
+                arch.write(f"{numeroCamion};{datos['distancia']}\n")
+        print("Se han almacenado los datos en el archivo revisionMecanica.csv.")
+
     except IOError:
-        print("No se pudo crear el archivo.")
+        print(f"No se pudo crear el archivo revisionMecanica.csv.")
 
+    # Archivo tiempo promedio
+    try:
+        with open('tiempoPromedio.csv', mode='w') as arch:
+            arch.write('Numero de Camion;Días;Horas;Minutos\n')  # Encabezados
+            for camion, data in camiones_data.items():
+                total_tiempo = data['tiempo']
+                dias = total_tiempo // 24
+                horas = (total_tiempo % 24)
+                minutos = (total_tiempo * 60) % 60
+                
+                arch.write(f"{camion};{dias}d;{horas}hr;{minutos}min\n")
+        print("Se han almacenado los tiempos promedios en tiempoPromedio.csv.")
 
-
-
-
+    except IOError:
+        print(f"No se pudo crear el archivo tiempoPromedio.csv.")
 
 def main():
     lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga, camiones_data = ingresoDeDatos()
@@ -111,8 +126,6 @@ def main():
     
     print("")
     guardarDatos(camiones_data)
-
-
 
 if __name__ == "__main__":
     main()
