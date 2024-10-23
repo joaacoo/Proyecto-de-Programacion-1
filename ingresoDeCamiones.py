@@ -76,5 +76,8 @@ def crearCSV(camiones_data, cargas_data):
         print("No se pudo crear el archivo")
 
 # Ejecución del programa
-camiones_data, cargas_data = ingresoDeDatos()
-crearCSV(camiones_data, cargas_data)
+def llamadoDeArchivos():
+    camiones_data, cargas_data = ingresoDeDatos()
+    crearCSV(camiones_data, cargas_data)
+    
+    return camiones_data, cargas_data 
