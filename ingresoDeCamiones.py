@@ -64,3 +64,23 @@ def ingresoDeDatos():
     lista_carga = [cargas_data[camion] for camion in lista_camiones]
 
     return lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga, camiones_data
+
+def crearCSV():
+
+    try:
+        with open('camion_iden.csv', mode='w') as arch:
+            arch.write('Numero de Camion;Identificacion\n')
+        print("Se han almacenado los datos en el archivo 'camion_iden.csv")         
+
+    except IOError:
+        print("No se pudo crear el archivo") 
+
+    try:
+        with open('informes.csv', mode='w') as arch:
+            arch.write('Cargas(Tn);Distancia Recorrida(KM);Consumo de Diesel(L);Tiempo empleado\n')
+        print("Se han almacenado los datos en el archivo 'informes.csv")        
+
+    except IOError:
+        print("No se pudo crear el archivo")
+
+    return 'informes.csv', 'camion_iden.csv'
