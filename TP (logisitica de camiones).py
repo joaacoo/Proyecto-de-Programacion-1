@@ -117,7 +117,6 @@ def main():
     print("")
     guardarDatos(camiones_data)
     
-    
 
 if __name__ == "__main__":
     main()

@@ -4,22 +4,22 @@ import random
 def crearCSV():
 
     try:
-        with open('camion_iden.csv', mode='w') as arch:
+        with open('camionIden.csv', mode='w') as arch:
             arch.write('Numero de Camion;Identificacion\n')
-        print("Se han almacenado los datos en el archivo 'camion_iden.csv")         
+        print("Se han almacenado los datos en el archivo 'camionIden.csv")         
 
     except IOError:
         print("No se pudo crear el archivo") 
 
     try:
         with open('informes.csv', mode='w') as arch:
-            arch.write('Cargas(Tn);Distancia Recorrida(KM);Consumo de Diesel(L);Tiempo empleado\n')
+            arch.write('Cargas(Tn);Distancia Recorrida(KM);Tiempo empleado\n')
         print("Se han almacenado los datos en el archivo 'informes.csv")        
 
     except IOError:
         print("No se pudo crear el archivo")
 
-    return 'informes.csv', 'camion_iden.csv'
+    return 'informes.csv', 'camionIden.csv'
 
 
 def ingresoDeDatos():
@@ -43,7 +43,7 @@ def ingresoDeDatos():
                 try:
                     identificacion = int(identificacion)
 
-                    if identificacion < 0:
+                    if identificacion < 1:
                         print("Ingrese un número de identificación válido.")
                     else:
                         # Solicitar y validar el tiempo, distancia y carga
@@ -83,5 +83,30 @@ def ingresoDeDatos():
     lista_distancia = [camiones_data[camion]['distancia'] for camion in lista_camiones]
     lista_contTiempo = [camiones_data[camion]['contTiempo'] for camion in lista_camiones]
     lista_carga = [cargas_data[camion] for camion in lista_camiones]
-
+        
     return lista_camiones, lista_tiempo, lista_distancia, lista_contTiempo, lista_carga, camiones_data
+
+
+def guardarDatosEntrada(camiones_data, cargas_data):
+    # Guardar datos de camiones en camion_iden.csv
+    try:
+        with open('camionIden.csv', mode='w') as arch:  # Cambiado a 'w' para sobrescribir
+            for numeroCamion, data in camiones_data.items():
+                arch.write(f"{numeroCamion};{data['identificacion']}\n")
+                print("Se almacenaron los datos de recorrido en el archivo camionIden.csv.")
+    except IOError:
+        print("No se pudo guardar los datos de camiones en camionIden.csv.")
+
+    # Guardar datos de cargas en informes.csv
+    try:
+        with open('informes.csv', mode='w') as arch:  # Cambiado a 'w' para sobrescribir
+            for numeroCamion, cargas in cargas_data.items():
+                for identificacion, carga in cargas:
+                    tiempo = camiones_data[numeroCamion]['tiempo']
+                    distancia = camiones_data[numeroCamion]['distancia']
+                    arch.write(f"{carga};{distancia};{tiempo}\n")  # Aquí se pone '0' como ejemplo para consumo de diesel
+                    print("Se almacenaron los datos de recorrido en el archivo camionIden.csv.")
+
+    except IOError:
+        print("No se pudo guardar los datos de informes en 'informes.csv'.")
+        
