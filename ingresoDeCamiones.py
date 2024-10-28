@@ -1,4 +1,6 @@
 import random
+
+
 def guardarDatosEnCsv(camiones_data, cargas_data):
     # Guardar datos de camiones en camion_iden.csv
     try:
@@ -14,6 +16,24 @@ def guardarDatosEnCsv(camiones_data, cargas_data):
     except IOError:
         print("No se pudo guardar los datos de camiones en camionIden.csv.")
         
+
+    # Guardar datos de cargas en informes.csv
+    try:
+        with open('informes.csv', mode='w') as arch: 
+            arch.write('Numero de Camion;Identificacion;Cargas (Tn);Distancia Recorrida (KM);Tiempo empleado\n')
+            
+            for numeroCamion, cargas in cargas_data.items():
+                for data in cargas:
+                    arch.write(f"{numeroCamion};{data['identificacion']};{data['carga']};{data['tiempo']};{data['distancia']}\n")
+            
+            print("Se almacenaron los datos de recorrido en el archivo informes.csv.")
+            
+            arch.close()
+
+    except IOError:
+        print("No se pudo guardar los datos de informes en 'informes.csv'.")
+
+
 
 def ingresoDeDatos():
     camiones_data = {}  # Diccionario para almacenar los datos de cada camión
@@ -80,22 +100,4 @@ def ingresoDeDatos():
     guardarDatosEnCsv(camiones_data, cargas_data)
 
     return camiones_data, cargas_data
-
-
-
-    # Guardar datos de cargas en informes.csv
-    try:
-        with open('informes.csv', mode='w') as arch: 
-            arch.write('Numero de Camion;Identificacion;Cargas (Tn);Distancia Recorrida (KM);Tiempo empleado\n')
-            
-            for numeroCamion, cargas in cargas_data.items():
-                for data in cargas:
-                    arch.write(f"{numeroCamion};{data['identificacion']};{data['carga']};{data['tiempo']};{data['distancia']}\n")
-            
-            print("Se almacenaron los datos de recorrido en el archivo informes.csv.")
-            
-            arch.close()
-
-    except IOError:
-        print("No se pudo guardar los datos de informes en 'informes.csv'.")
         
