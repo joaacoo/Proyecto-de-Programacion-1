@@ -2,7 +2,7 @@ from ingresoDeCamiones import ingresoDeDatos,guardarDatosEnCsv
 
 
 
-def cargar_matriz_recursivo(claves, cargas_data, resultado):
+def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
     # Caso base: si no hay más claves que procesar, devolvemos el resultado final
     if not claves:
         return resultado
@@ -22,28 +22,7 @@ def cargar_matriz_recursivo(claves, cargas_data, resultado):
             resultado[identificacion] += 1
 
     # Llamada recursiva para el resto de los elementos en 'claves'
-    return cargar_matriz_recursivo(claves[1:], cargas_data, resultado)
-
-
-
-
-
-def imprimirMatriz(matriz, identificaciones):
-    print(f"{'Identificación':>40}")  # Centrar la palabra "Identificación"
-    print(f"{'Número de Camión':>20}", end=" ")  # Alinear el encabezado "Número de Camión"
-    
-    
-    # Imprimir los encabezados de identificación
-    for iden in identificaciones:
-        print(f"{iden:>20}", end=" ")  # Alinear las identificaciones
-    print()  # Nueva línea
-
-
-    # Imprimir la matriz
-    for fila in matriz:
-        for elemento in fila:
-            print(f"{str(elemento):>20}", end=" ")  # Alinear a la derecha
-        print()
+    return cantidad_viajes_por_chofer_recursivo(claves[1:], cargas_data, resultado)
 
 
 
@@ -126,28 +105,13 @@ def guardarInformes():
         revisionMecanicaArch.close()
 
 
-        
-
 def main():
     camiones_data, cargas_data = ingresoDeDatos()
-    '''
-    lista_identificacion = []
-    for c in lista_carga:
-        for carga in c:
-            if carga[0] not in lista_identificacion:
-                lista_identificacion.append(carga[0])
-    
-    matriz_cargas = cargar_matriz_recursivo(lista_camiones, lista_identificacion, lista_carga)
-    
-    print("Matriz de Cargas:")
-    'print("")
-    imprimirMatriz(matriz_cargas, lista_identificacion)
-    '''
     
     claves = list(cargas_data.keys())
     
     resultado = {}
-    resultado = cargar_matriz_recursivo(claves, cargas_data, resultado)
+    resultado = cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado)
     
     print("")
     print("Cantida de viajes por chofer", resultado)

@@ -34,10 +34,10 @@ def ingresoDeDatos():
                                 'identificacion': identificacion,
                                 'totalTiempo': tiempo,
                                 'totalDistancia': distancia,                                
-                                'totalCarga': distancia,
+                                'totalCarga': carga,
                                 'cantidadViajes': 1,
                             }
-                            #inicializo la lista para las cargas de este camion en particula
+                            #inicializo la lista para las cargas de este camion en particular
                             cargas_data[numeroCamion] = []
                         else:
                             camiones_data[numeroCamion]['totalTiempo'] += tiempo
@@ -49,7 +49,7 @@ def ingresoDeDatos():
                                 'identificacion': identificacion,
                                 'carga': carga,
                                 'tiempo': tiempo,                                
-                                'distancia': distancia})  # Agregar carga al camion
+                                'distancia': distancia})
                         
                 except ValueError:
                     print("El valor ingresado para identificación no es válido.")
@@ -70,7 +70,7 @@ def ingresoDeDatos():
 def guardarDatosEnCsv(camiones_data, cargas_data):
     # Guardar datos de camiones en camion_iden.csv
     try:
-        with open('camionIden.csv', mode='w') as arch:  # Cambiado a 'w' para sobrescribir
+        with open('camionIden.csv', mode='w') as arch: 
             arch.write('Numero de Camion;Identificacion del chofer;Total tiempo;Total distancia (KM);Total carga (Tn);Cantidad viajes\n')
             for numeroCamion, data in camiones_data.items():
                 arch.write(f"{numeroCamion};{data['identificacion']};{data['totalTiempo']};{data['totalDistancia']};{data['totalCarga']};{data['cantidadViajes']}\n")
@@ -85,14 +85,14 @@ def guardarDatosEnCsv(camiones_data, cargas_data):
 
     # Guardar datos de cargas en informes.csv
     try:
-        with open('informes.csv', mode='w') as arch:  # Cambiado a 'w' para sobrescribir
+        with open('informes.csv', mode='w') as arch: 
             arch.write('Numero de Camion;Identificacion;Cargas (Tn);Distancia Recorrida (KM);Tiempo empleado\n')
             
             for numeroCamion, cargas in cargas_data.items():
                 for data in cargas:
                     arch.write(f"{numeroCamion};{data['identificacion']};{data['carga']};{data['tiempo']};{data['distancia']}\n")
             
-            print("Se almacenaron los datos de recorrido en el archivo camionIden.csv.")
+            print("Se almacenaron los datos de recorrido en el archivo informes.csv.")
             
             arch.close()
 
