@@ -114,7 +114,6 @@ def main():
         camiones_data, cargas_data = ingresoDeDatos()
     else:
         # Si elige "N", skipea y llama a la fucion guardar datos para no ingresar nada
-        guardarInformes()
         return  
     claves = list(cargas_data.keys())
     
