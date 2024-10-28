@@ -106,15 +106,8 @@ def guardarInformes():
 
 
 def main():
-    # quieres añadir datos?
-    opcion = input("¿Desea agregar datos? (Y/N): ").strip().upper()
+    camiones_data, cargas_data = ingresoDeDatos()
     
-    if opcion == "Y":
-        # llamar a la funcion para abrir datos 
-        camiones_data, cargas_data = ingresoDeDatos()
-    else:
-        # Si elige "N", skipea y llama a la fucion guardar datos para no ingresar nada
-        return  
     claves = list(cargas_data.keys())
     
     resultado = {}
