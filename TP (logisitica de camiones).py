@@ -2,8 +2,9 @@ from ingresoDeCamiones import ingresoDeDatos,guardarDatosEnCsv
 
 
 
+
 def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
-    # Caso base: si no hay más claves que procesar, devolvemos el resultado final
+    #si no hay mas claves que procesar, entonces return el resultado final
     if not claves:
         return resultado
 
@@ -11,7 +12,7 @@ def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
     numeroCamion = claves[0]
     cargas = cargas_data[numeroCamion]
     
-    # Obtenemos la identificación del chofer del camión actual
+    # Obtenemos la identificacion del chofer del camion
     for carga in cargas:        
         identificacion = carga["identificacion"]
 
