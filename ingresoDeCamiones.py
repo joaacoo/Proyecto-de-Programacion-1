@@ -1,4 +1,19 @@
 import random
+def guardarDatosEnCsv(camiones_data, cargas_data):
+    # Guardar datos de camiones en camion_iden.csv
+    try:
+        with open('camionIden.csv', mode='w') as arch: 
+            arch.write('Numero de Camion;Identificacion del chofer;Total tiempo;Total distancia (KM);Total carga (Tn);Cantidad viajes\n')
+            for numeroCamion, data in camiones_data.items():
+                arch.write(f"{numeroCamion};{data['identificacion']};{data['totalTiempo']};{data['totalDistancia']};{data['totalCarga']};{data['cantidadViajes']}\n")
+            
+            print("Se almacenaron los datos de recorrido en el archivo camionIden.csv.")
+            
+            arch.close()
+            
+    except IOError:
+        print("No se pudo guardar los datos de camiones en camionIden.csv.")
+        
 
 def ingresoDeDatos():
     camiones_data = {}  # Diccionario para almacenar los datos de cada camión
@@ -67,21 +82,6 @@ def ingresoDeDatos():
     return camiones_data, cargas_data
 
 
-def guardarDatosEnCsv(camiones_data, cargas_data):
-    # Guardar datos de camiones en camion_iden.csv
-    try:
-        with open('camionIden.csv', mode='w') as arch: 
-            arch.write('Numero de Camion;Identificacion del chofer;Total tiempo;Total distancia (KM);Total carga (Tn);Cantidad viajes\n')
-            for numeroCamion, data in camiones_data.items():
-                arch.write(f"{numeroCamion};{data['identificacion']};{data['totalTiempo']};{data['totalDistancia']};{data['totalCarga']};{data['cantidadViajes']}\n")
-            
-            print("Se almacenaron los datos de recorrido en el archivo camionIden.csv.")
-            
-            arch.close()
-            
-    except IOError:
-        print("No se pudo guardar los datos de camiones en camionIden.csv.")
-        
 
     # Guardar datos de cargas en informes.csv
     try:
