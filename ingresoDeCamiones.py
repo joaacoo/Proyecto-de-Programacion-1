@@ -36,11 +36,11 @@ def guardarDatosEnCsv(camiones_data, cargas_data):
 
 
 def ingresoDeDatos():
-    camiones_data = {}  # Diccionario para almacenar los datos de cada camión
-    cargas_data = {}    # Diccionario para almacenar cada viaje que hizo el camión
+    camiones_data = {}  # Diccionario para almacenar los datos de cada camion
+    cargas_data = {}    # Diccionario para almacenar cada viaje que hizo el camion
     
-    # Solicitar el ingreso del primer camión
-    numeroCamion = input("Ingrese el número del camión (-1 para terminar): ")
+    # Solicitar el ingreso del primer camion
+    numeroCamion = input("Ingrese el numero del camion (-1 para terminar): ")
     
     while numeroCamion != "-1":
         try:
@@ -48,15 +48,15 @@ def ingresoDeDatos():
 
             # Validar que el número del camión sea positivo
             if numeroCamion < 1:
-                print("Ingrese un número de camión válido (-1 para terminar).")
+                print("Ingrese un numero de camión valido (-1 para terminar).")
             else:
-                identificacion = input("Ingrese un número de identificación del chofer: ")
+                identificacion = input("Ingrese un numero de identificación del chofer: ")
                 
                 try:
                     identificacion = int(identificacion)
 
                     if identificacion < 1:
-                        print("Ingrese un número de identificación válido.")
+                        print("Ingrese un numero de identificacion valido.")
                     else:
                         # Solicitar y validar el tiempo, distancia y carga
                         tiempo = random.randint(1, 35)
@@ -87,13 +87,13 @@ def ingresoDeDatos():
                                 'distancia': distancia})
                         
                 except ValueError:
-                    print("El valor ingresado para identificación no es válido.")
+                    print("El valor ingresado para identificación no es valido.")
 
         except ValueError:
-            print("El valor ingresado no es válido.")
+            print("El valor ingresado no es valido.")
 
         # Solicitar el ingreso del próximo camión
-        numeroCamion = input("Ingrese el número del camión (-1 para terminar): ")
+        numeroCamion = input("Ingrese el numero del camion (-1 para terminar): ")
     
     print("")
     
