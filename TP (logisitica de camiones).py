@@ -3,7 +3,7 @@ from ingresoDeCamiones import ingresoDeDatos,guardarDatosEnCsv
 
 
 def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
-    # Caso base: si no hay más claves que procesar, devolvemos el resultado final
+    # Caso base: si no hay mas claves que procesar, devolvemos el resultado final
     if not claves:
         return resultado
 
@@ -11,11 +11,11 @@ def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
     numeroCamion = claves[0]
     cargas = cargas_data[numeroCamion]
     
-    # Obtenemos la identificación del chofer del camión actual
+    # Obtenemos la identificacion del chofer del camión actual
     for carga in cargas:        
         identificacion = carga["identificacion"]
 
-        # Actualizamos el conteo de viajes para cada identificación en 'resultado'
+        # Actualizamos el conteo de viajes para cada identificacion en 'resultado'
         if identificacion not in resultado:
             resultado[identificacion] = 1
         else:
@@ -88,7 +88,7 @@ def guardarInformes():
                 consumoDiesel = (30 / 100) * totalDistancia  # Calcula el consumo
                 dieselArch.write(f"{numeroCamion};{consumoDiesel:.2f} L/100km\n")
 
-                if totalDistancia > 20000:  # Filtra según la distancia
+                if totalDistancia > 20000:  # Filtra segun la distancia
                     revisionMecanicaArch.write(f"{numeroCamion};{totalDistancia} KM\n")
                 
         print("Se creo el archivo distancia.csv.")
@@ -114,7 +114,7 @@ def main():
     resultado = cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado)
     
     print("")
-    print("Cantida de viajes por chofer", resultado)
+    print("Cantidad de viajes por chofer", resultado)
 
     print("")
     guardarInformes()
