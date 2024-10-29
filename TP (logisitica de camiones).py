@@ -2,7 +2,7 @@ from ingresoDeCamiones import ingresoDeDatos,guardarDatosEnCsv
 
 
 
-def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
+def cantViajesChoferRecursivo(claves, cargas_data, resultado):
     # Caso base: si no hay mas claves que procesar, devolvemos el resultado final
     if not claves:
         return resultado
@@ -22,7 +22,7 @@ def cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado):
             resultado[identificacion] += 1
 
     # Llamada recursiva para el resto de los elementos en 'claves'
-    return cantidad_viajes_por_chofer_recursivo(claves[1:], cargas_data, resultado)
+    return cantViajesChoferRecursivo(claves[1:], cargas_data, resultado)
 
 
 
@@ -111,7 +111,7 @@ def main():
     claves = list(cargas_data.keys())
     
     resultado = {}
-    resultado = cantidad_viajes_por_chofer_recursivo(claves, cargas_data, resultado)
+    resultado = cantViajesChoferRecursivo(claves, cargas_data, resultado)
     
     print("")
     print("Cantidad de viajes por chofer", resultado)
